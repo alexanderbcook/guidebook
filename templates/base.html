@@ -7,12 +7,28 @@
     <title id="page-title"></title>   
   </head>
   <body>
-     {% for l in listings %} 
+     {% for r in recommendations %} 
      <div class="listings_item">  
-      {{l.fields.Name}}
+      {{r.fields.Name}}
      </div>
      {% endfor %}
-    </div>
+  <ul class="cat_flex_wrapper"> 
+   <li class="cat_flex_item">
+    <a class="cat_button"
+      href="/">
+     All
+    </a>
+   </li>
+
+   {% for neigh in neighborhoods %}
+    <li class="cat_flex_item">      
+     <a class="cat_button"
+      href="/location/{{cat}}">
+      {{ neigh }}
+     </a>
+    </li>
+   {% endfor %}
+  </ul>
   </body>
   <style>
   </style>
