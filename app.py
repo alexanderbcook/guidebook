@@ -5,6 +5,8 @@ from pyairtable import Table
 from pyairtable.formulas import match
 from collections import OrderedDict
 from flask_assets import Bundle, Environment
+import utilities
+from utilities import get_data, swap_ids_to_names, get_unique_list
 
 app = Flask(__name__)
 
@@ -26,40 +28,6 @@ css_bundle = Bundle('css/global.css',
 
 assets = Environment(app)
 assets.register('main_styles', css_bundle)
-
-
-def get_data(name, container):
-    TABLE = Table(AIRTABLE_SECRET_TOKEN, AIRTABLE_BASE_ID, name)
-    container = TABLE.all()
-
-    return container
-
-def swap_ids_to_names(recommendations, records, name):
-    for recommendation in recommendations:
-        if name in recommendation["fields"].keys():
-            for record in records:
-                i = 0
-                while i < len(recommendation["fields"][name]):
-                    if  recommendation["fields"][name][i] == record["id"]:
-                        recommendation["fields"][name][i] =  record["fields"]["Name"]
-                    i+=1
-
-
-    return recommendations
-
-def get_unique_list(name):
-    bulk_list = []
-    for recommendation in recommendations:
-        if name in recommendation["fields"].keys():
-            i = 0
-            while i < len(recommendation["fields"][name]):
-                if  recommendation["fields"][name][i] not in bulk_list:
-                    bulk_list.append(recommendation["fields"][name][i])
-                i+=1
-
-    unique_list = list(OrderedDict.fromkeys(bulk_list))
-    
-    return unique_list
 
 neighborhoods   = []
 categories      = []
@@ -83,25 +51,25 @@ swap_ids_to_names(recommendations, diets,           'Diets')
 def return_recommendations():
 
     return render_template("base.html", recommendations = recommendations,
-                                        neighborhoods   = neighborhoods, #get_unique_list("Neighborhood"),
-                                        categories      = categories, #get_unique_list("Categories"),
-                                        cuisines        = get_unique_list("Cuisine"),
-                                        cities          = get_unique_list("Cities"),
-                                        diets           = get_unique_list("Diets"))
+                                        neighborhoods   = neighborhoods,
+                                        categories      = categories,
+                                        cuisines        = cuisines,
+                                        cities          = cities,
+                                        diets           = diets)
 
 @app.route("/category/<category>")
 def filter_by_category(category):
     filtered_recommendations = []
-    
+
     for recommendation in recommendations:
         if "Categories" in recommendation["fields"].keys():
             if category in recommendation["fields"]["Categories"]:
                 filtered_recommendations.append(recommendation)
     
     return render_template("base.html", recommendations = filtered_recommendations, 
-                                        categories      = categories, #get_unique_list("Categories"),
-                                        cuisines        = get_unique_list("Cuisine"),
-                                        cities          = get_unique_list("Cities"),
-                                        diets           = get_unique_list("Diets"))
+                                        categories      = categories,
+                                        cuisines        = cuisines,
+                                        cities          = cities,
+                                        diets           = diets)
 
     
