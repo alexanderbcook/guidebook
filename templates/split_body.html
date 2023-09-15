@@ -1,0 +1,56 @@
+<h2 class="section_title">Recommendations</h2>
+
+{% include 'categories.html' %}
+<div class="container">
+  <div class="listings_wrapper_left">
+
+   {% for r in recommendations %} 
+   <div class="listings_item">  
+    <a href="/recommendation/{{r.fields.Name}}">
+      <div class="lower_wrapper">
+       <p class="listings_title">{{r.fields.Name}}</p>
+       <p class="listings_subtitle">
+        {{ r.fields.Description }}
+       </p>   
+      </div> 
+    </a>
+   </div>
+   {% endfor %}
+  </div>
+  <div class="listings_wrapper">
+    {% for a in additional_info %} 
+    <div class="listings_item_right">
+      {% if 'Pictures' in a.fields %}
+      <img
+        cross-origin="use-credentials"
+        class="listings_img" 
+        src="{{ a.fields.Pictures[0].url }}"
+        style="width: 25vw; min-width:330px;"
+        />
+      {% endif %}
+      <a href="/recommendation/{{a.fields.Name}}">
+      <div class="lower_wrapper">
+       <p class="listings_title">{{a.fields.Name}}</p>
+       <p class="listings_subtitle">
+        {{ a.fields.Description }}
+       </p>
+       {% if 'Cuisine' in a.fields %}
+       <p class="listings_subtitle">
+        {{ a.fields.Cuisine[0] }}
+       </p>
+       {% endif %}       
+       {% if 'Address' in a.fields %}
+       <p class="listings_subtitle">
+        {{ a.fields.Address }}
+       </p>
+       {% endif %}
+      </div>
+      {% if 'City' in a.fields %}
+       <p class="listings_subtitle">
+        {{ a.fields.City }}
+       </p>
+       {% endif %}
+    </a>
+    {% endfor %}
+  </div>
+</div>

@@ -42,3 +42,18 @@ def get_unique_list(recommendations, name):
     unique_list = list(OrderedDict.fromkeys(bulk_list))
     
     return unique_list
+
+def filter_recommendations(recommendations, container, category):
+    for recommendation in recommendations:
+        if "Categories" in recommendation["fields"].keys():
+            if category in recommendation["fields"]["Categories"]:
+                container.append(recommendation)
+
+    return container
+
+def fetch_additional_info(recommendations, container, name):
+    for recommendation in recommendations:
+        if recommendation["fields"]["Name"] == name:
+            container.append(recommendation)
+    print(container)
+    return container 

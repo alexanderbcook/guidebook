@@ -12,7 +12,9 @@ h2.section_title {
  display: flex;
  justify-content: center;
  align-items: baseline;
- flex-wrap: wrap; 
+ flex-wrap: wrap;
+ max-height: 100%;
+ overflow-y: scroll;
 }
 
 .listings_item {

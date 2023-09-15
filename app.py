@@ -1,27 +1,19 @@
 import os
 from flask import Flask
 from flask import render_template, request, url_for
+from flask_assets import Bundle, Environment
 from pyairtable import Table
 from pyairtable.formulas import match
 from collections import OrderedDict
-from flask_assets import Bundle, Environment
 import utilities
-from utilities import get_data, swap_ids_to_names, get_unique_list
+from utilities import get_data, swap_ids_to_names, get_unique_list, filter_recommendations, fetch_additional_info
 
 app = Flask(__name__)
-
-env_config = os.getenv("PROD_APP_SETTINGS")
-app.config.from_object(env_config)
-
-AIRTABLE_SECRET_TOKEN = os.getenv("AIRTABLE_SECRET_TOKEN")
-AIRTABLE_BASE_ID = os.getenv("AIRTABLE_BASE_ID")
-
-TABLE = Table(AIRTABLE_SECRET_TOKEN, AIRTABLE_BASE_ID, "Restaurants")
-recommendations = TABLE.all()
 
 css_bundle = Bundle('css/global.css',
           'css/nav.css', 
           'css/body.css',
+          'css/split_body.css',
           'css/categories.css',
           'css/footer.css',          
           filters='cssmin', output='css/styles.css')
@@ -29,12 +21,14 @@ css_bundle = Bundle('css/global.css',
 assets = Environment(app)
 assets.register('main_styles', css_bundle)
 
+recommendations = []
 neighborhoods   = []
 categories      = []
 cuisines        = []
 cities          = []
 diets           = []
 
+recommendations = get_data("Restaurants"    , recommendations)
 neighborhoods   = get_data("Neighborhoods"  , neighborhoods)
 categories      = get_data("Categories"     , categories)
 cuisines        = get_data("Cuisines"       , cuisines)
@@ -50,26 +44,36 @@ swap_ids_to_names(recommendations, diets,           'Diets')
 @app.route("/")
 def return_recommendations():
 
-    return render_template("base.html", recommendations = recommendations,
-                                        neighborhoods   = neighborhoods,
-                                        categories      = categories,
-                                        cuisines        = cuisines,
-                                        cities          = cities,
-                                        diets           = diets)
+    return render_template("base.html",  recommendations = recommendations,
+                                         neighborhoods   = neighborhoods,
+                                         categories      = categories,
+                                         cuisines        = cuisines,
+                                         cities          = cities,
+                                         diets           = diets)
 
 @app.route("/category/<category>")
 def filter_by_category(category):
     filtered_recommendations = []
-
-    for recommendation in recommendations:
-        if "Categories" in recommendation["fields"].keys():
-            if category in recommendation["fields"]["Categories"]:
-                filtered_recommendations.append(recommendation)
+    filter_recommendations(recommendations, filtered_recommendations, category)
     
-    return render_template("base.html", recommendations = filtered_recommendations, 
-                                        categories      = categories,
-                                        cuisines        = cuisines,
-                                        cities          = cities,
-                                        diets           = diets)
+    return render_template("base.html",  recommendations = filtered_recommendations,
+                                         neighborhoods   = neighborhoods, 
+                                         categories      = categories,
+                                         cuisines        = cuisines,
+                                         cities          = cities,
+                                         diets           = diets)
+
+@app.route("/recommendation/<name>")
+def additional_info(name):
+    additional_info = []
+    fetch_additional_info(recommendations, additional_info, name)
+    
+    return render_template("specific.html", recommendations = recommendations,
+                                            additional_info = additional_info, 
+                                            neighborhoods   = neighborhoods, 
+                                            categories      = categories,
+                                            cuisines        = cuisines,
+                                            cities          = cities,
+                                            diets           = diets)
 
     
