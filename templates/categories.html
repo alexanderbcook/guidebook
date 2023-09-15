@@ -1,0 +1,18 @@
+<ul class="cat_flex_wrapper"> 
+ <li class="cat_flex_item">
+  <a class="cat_button"
+    href="/">
+   All
+  </a>
+ </li>
+
+ {% for cat in categories %}
+  <li class="cat_flex_item">      
+   <a class="cat_button"
+    href="/category/{{cat.fields.Name}}">
+
+    {{ cat.fields.Name}}
+   </a>
+  </li>
+ {% endfor %}
+</ul>

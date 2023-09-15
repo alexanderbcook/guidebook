@@ -1,0 +1,22 @@
+
+
+
+
+<h2 class="section_title">Recommendations</h2>
+
+{% include 'categories.html' %}
+<div class="listings_wrapper">
+
+ {% for r in recommendations %} 
+ <div class="listings_item">  
+  <a href="">
+    <div class="lower_wrapper">
+     <p class="listings_title">{{r.fields.Name}}</p>
+     <p class="listings_subtitle">
+      {{ r.fields.Description }}
+     </p>   
+    </div> 
+  </a>
+ </div>
+ {% endfor %}
+ 

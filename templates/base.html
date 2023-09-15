@@ -1,35 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title"></title>   
-  </head>
-  <body>
-     {% for r in recommendations %} 
-     <div class="listings_item">  
-      {{r.fields.Name}}
-     </div>
-     {% endfor %}
-  <ul class="cat_flex_wrapper"> 
-   <li class="cat_flex_item">
-    <a class="cat_button"
-      href="/">
-     All
-    </a>
-   </li>
-
-   {% for neigh in neighborhoods %}
-    <li class="cat_flex_item">      
-     <a class="cat_button"
-      href="/location/{{cat}}">
-      {{ neigh }}
-     </a>
-    </li>
-   {% endfor %}
-  </ul>
+   {% include 'head.html' %}
+  <body> 
+    {% include 'nav.html' %}
+    {% include 'body.html' %}
   </body>
-  <style>
-  </style>
 </html>

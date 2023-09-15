@@ -1,0 +1,30 @@
+nav { margin-bottom: 2rem; }
+.nav_wrapper {
+ line-height: 1;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ color: #2F1D58;
+ background-color: white;
+ padding: 1.5rem 7rem 1.25rem 7rem;
+}
+
+.nav_title {
+ font-size: 1.75rem;
+ font-weight: 800;
+ text-transform: uppercase;
+ position: relative;
+ margin-left: 10px;
+}
+
+.logo_wrapper { display: flex; align-items: center; margin-bottom: 1rem; }
+.logo_wrapper i { font-size: 2.25rem; }
+
+@media screen and (min-width: 860px) {
+ .nav_wrapper {
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem 7rem 0.75rem 7rem;
+ }
+ .logo_wrapper { margin-bottom: 0; }
+}
