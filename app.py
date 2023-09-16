@@ -1,21 +1,19 @@
-import os
 from flask import Flask
-from flask import render_template, request, url_for
+from flask import render_template
 from flask_assets import Bundle, Environment
-from pyairtable import Table
-from pyairtable.formulas import match
-from collections import OrderedDict
-import utilities
-from utilities import get_data, swap_ids_to_names, get_unique_list, filter_recommendations, fetch_additional_info
+from utilities import   (get_data,
+                        swap_ids_to_names,
+                        filter_recommendations,
+                        fetch_additional_info)
 
 app = Flask(__name__)
 
 css_bundle = Bundle('css/global.css',
-          'css/nav.css', 
+          'css/nav.css',
           'css/body.css',
           'css/split_body.css',
           'css/categories.css',
-          'css/footer.css',          
+          'css/footer.css',
           filters='cssmin', output='css/styles.css')
 
 assets = Environment(app)
@@ -64,16 +62,14 @@ def filter_by_category(category):
                                          diets           = diets)
 
 @app.route("/recommendation/<name>")
-def additional_info(name):
+def return_additional_info(name):
     additional_info = []
     fetch_additional_info(recommendations, additional_info, name)
     
-    return render_template("specific.html", recommendations = recommendations,
-                                            additional_info = additional_info, 
-                                            neighborhoods   = neighborhoods, 
-                                            categories      = categories,
-                                            cuisines        = cuisines,
-                                            cities          = cities,
-                                            diets           = diets)
-
-    
+    return render_template("additional_info.html",  recommendations = recommendations,
+                                                    additional_info = additional_info,
+                                                    neighborhoods   = neighborhoods,
+                                                    categories      = categories,
+                                                    cuisines        = cuisines,
+                                                    cities          = cities,
+                                                    diets           = diets)

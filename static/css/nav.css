@@ -1,4 +1,6 @@
-nav { margin-bottom: 2rem; }
+nav { 
+  margin-bottom: 2rem; 
+}
 .nav_wrapper {
  line-height: 1;
  display: flex;

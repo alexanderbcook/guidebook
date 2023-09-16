@@ -1,7 +1,7 @@
 import os
+from collections import OrderedDict
 from flask import Flask
 from pyairtable import Table
-from collections import OrderedDict
 
 app = Flask(__name__)
 env_config = os.getenv("PROD_APP_SETTINGS")
@@ -11,8 +11,8 @@ AIRTABLE_SECRET_TOKEN = os.getenv("AIRTABLE_SECRET_TOKEN")
 AIRTABLE_BASE_ID = os.getenv("AIRTABLE_BASE_ID")
 
 def get_data(name, container):
-    TABLE = Table(AIRTABLE_SECRET_TOKEN, AIRTABLE_BASE_ID, name)
-    container = TABLE.all()
+    table = Table(AIRTABLE_SECRET_TOKEN, AIRTABLE_BASE_ID, name)
+    container = table.all()
 
     return container
 
@@ -55,5 +55,4 @@ def fetch_additional_info(recommendations, container, name):
     for recommendation in recommendations:
         if recommendation["fields"]["Name"] == name:
             container.append(recommendation)
-    print(container)
-    return container 
+    return container
