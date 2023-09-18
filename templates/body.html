@@ -2,14 +2,14 @@
 
 
 
-<h2 class="section_title">Recommendations</h2>
+<h2 class="section_title"><i>The List</i></h2>
 
 {% include 'categories.html' %}
 <div class="listings_wrapper">
 
  {% for r in recommendations %} 
  <div class="listings_item" tabindex="0">  
-  <a href="/recommendation/{{r.fields.Name}}">
+  <a hx-get="/recommendation/{{r.fields.Name}}" hx-target="body">
     <div class="lower_wrapper">
      <p class="listings_title">{{r.fields.Name}}</p>
      <p class="listings_subtitle">

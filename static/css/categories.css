@@ -8,9 +8,9 @@
 .cat_flex_item { margin: 15px 10px 15px 10px }
 
 .cat_button, .cat_button_selected, .modal_close_button { 
- color: #5D16A5;
+ color: #F93943;
  border: 2px solid;
- background-color: white; 
+ background-color: #FFCCCD; 
 
  border-radius: 7.5px;
  font-size: 1.1rem;
@@ -20,7 +20,7 @@
 }
 
 .cat_button:hover, .cat_button_selected, .modal_close_button:hover {
- background-color: #5D16A5;
+ background-color: #FAA2A4;
  color: white
 }
 .cat_button_selected {

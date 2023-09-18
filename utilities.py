@@ -1,4 +1,5 @@
 import os
+import time
 from collections import OrderedDict
 from flask import Flask
 from pyairtable import Table
@@ -10,12 +11,29 @@ app.config.from_object(env_config)
 AIRTABLE_SECRET_TOKEN = os.getenv("AIRTABLE_SECRET_TOKEN")
 AIRTABLE_BASE_ID = os.getenv("AIRTABLE_BASE_ID")
 
+### Decoraters.
+
+def timer(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        execution_time = end_time - start_time
+        print(f"Calling {func.__name__}.") 
+        print(f"Execution time: {execution_time} seconds.")
+        return result
+    return wrapper
+
+### Data layer manipulation utilities.
+
+@timer
 def get_data(name, container):
     table = Table(AIRTABLE_SECRET_TOKEN, AIRTABLE_BASE_ID, name)
     container = table.all()
 
     return container
 
+@timer
 def swap_ids_to_names(recommendations, records, name):
     for recommendation in recommendations:
         if name in recommendation["fields"].keys():
@@ -29,6 +47,7 @@ def swap_ids_to_names(recommendations, records, name):
 
     return recommendations
 
+@timer
 def get_unique_list(recommendations, name):
     bulk_list = []
     for recommendation in recommendations:
@@ -43,6 +62,7 @@ def get_unique_list(recommendations, name):
     
     return unique_list
 
+@timer
 def filter_recommendations(recommendations, container, category):
     for recommendation in recommendations:
         if "Categories" in recommendation["fields"].keys():
@@ -51,8 +71,10 @@ def filter_recommendations(recommendations, container, category):
 
     return container
 
+@timer
 def fetch_additional_info(recommendations, container, name):
     for recommendation in recommendations:
         if recommendation["fields"]["Name"] == name:
             container.append(recommendation)
     return container
+
