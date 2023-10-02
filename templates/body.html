@@ -2,22 +2,87 @@
 
 
 
-<h2 class="section_title"><i>The List</i></h2>
+<h2 class="section_title"><i><b>The List</b></i></h2>
 
 {% include 'categories.html' %}
 <div class="listings_wrapper">
 
  {% for r in recommendations %} 
- <div class="listings_item" tabindex="0">  
-  <a hx-get="/recommendation/{{r.fields.Name}}" hx-target="body">
-    <div class="lower_wrapper">
-     <p class="listings_title">{{r.fields.Name}}</p>
-     <p class="listings_subtitle">
-      {{ r.fields.Description }}
-     </p>   
-    </div> 
-  </a>
- </div>
- {% endfor %}
+ <div class="listings_item">  
+    <a class="openModal" id="{{r.id}}">    
+      <div class="lower_wrapper">
+      <p class="listings_title">{{r.fields.Name}}</p>
+      <p class="listings_subtitle">
+        {{ r.fields.Description }}
+      </p>   
+    </div></a>
+    <dialog id="{{'modal-'+r.id}}">
+      <div class="listings_wrapper">
+          <button class="closeModal" id="{{'close-'+r.id}}">X</button>
+          {% if 'Pictures' in r.fields %}
+          <figure>
+            <img
+              cross-origin="use-credentials"
+              class="listings_img" 
+              src="{{ r.fields.Pictures[0].url }}"
+              style="width: 25vw; min-width:330px;"
+            />
+            <figcaption><i>PC: {{r.fields.Photo_Credit}}</i></figcaption>
+          </figure>
+          {% endif %}
+          <div class="lower_wrapper">
+            <p class="listings_title">{{r.fields.Name}}</p>
+            <p class="listings_subtitle">{{r.fields.Description}}</p>
+            {% if 'Address' in r.fields %}
+            <p class="listings_subtitle">{{r.fields.Address}}{% if 'Cities' in r.fields%}{{', '+r.fields.Cities[0]}}{% endif %}</p>
+            {% endif %}
+            {% if 'Tags' in r.fields %}
+            <p class="listings_"><i>tags: {% for t in r.fields.Tags %}{{t.lower() + ', '}}{% endfor %}</i></p>
+            {% endif %}
+          </div>
+
+      </div>
+    </dialog>
 
  </div>
+ {% endfor %}
+</div>
+<script>
+
+  const buttons = document.querySelectorAll('.openModal');
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      const modal = document.getElementById('modal-'+button.id);
+      modal.showModal();
+    });
+  });
+
+  const closeButtons = document.querySelectorAll('.closeModal');
+
+  closeButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      const modal = document.getElementById(button.id.replace('close-','modal-'));
+      modal.close();
+    })
+  })
+
+  const modals = document.querySelectorAll('dialog');
+  modals.forEach((modal) => {
+    modal.addEventListener("click", event => {
+      const modalDimensions = modal.getBoundingClientRect();
+      if (
+        event.clientX < modalDimensions.left ||
+        event.clientX > modalDimensions.right ||
+        event.clientY < modalDimensions.top ||
+        event.clientY > modalDimensions.bottom
+      ) {
+        modal.close();
+         }
+    })
+  })
+
+</script>
+

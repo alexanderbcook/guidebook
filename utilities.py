@@ -74,7 +74,8 @@ def filter_recommendations(recommendations, container, category):
 @timer
 def fetch_additional_info(recommendations, container, name):
     for recommendation in recommendations:
-        if recommendation["fields"]["Name"] == name:
-            container.append(recommendation)
+        if "Name" in recommendation["fields"].keys():
+            if recommendation["fields"]["Name"] == name:
+                container.append(recommendation)
     return container
 

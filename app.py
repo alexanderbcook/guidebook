@@ -11,9 +11,7 @@ app = Flask(__name__)
 css_bundle = Bundle('css/global.css',
           'css/nav.css',
           'css/body.css',
-          'css/split_body.css',
           'css/categories.css',
-          'css/footer.css',
           filters='cssmin', output='css/styles.css')
 
 assets = Environment(app)
@@ -26,7 +24,7 @@ cuisines        = []
 cities          = []
 diets           = []
 
-recommendations = get_data("Restaurants"    , recommendations)
+recommendations = get_data("Main List"    , recommendations)
 neighborhoods   = get_data("Neighborhoods"  , neighborhoods)
 categories      = get_data("Categories"     , categories)
 cuisines        = get_data("Cuisines"       , cuisines)
@@ -41,7 +39,7 @@ swap_ids_to_names(recommendations, diets,           'Diets')
 
 @app.route("/")
 def return_recommendations():
-
+    print(recommendations)
     return render_template("base.html",  recommendations = recommendations,
                                          neighborhoods   = neighborhoods,
                                          categories      = categories,
@@ -66,10 +64,10 @@ def return_additional_info(name):
     additional_info = []
     fetch_additional_info(recommendations, additional_info, name)
     
-    return render_template("additional_info.html",  recommendations = recommendations,
-                                                    additional_info = additional_info,
-                                                    neighborhoods   = neighborhoods,
-                                                    categories      = categories,
-                                                    cuisines        = cuisines,
-                                                    cities          = cities,
-                                                    diets           = diets)
+    return render_template("base.html",     recommendations = recommendations,
+                                            additional_info = additional_info,
+                                            neighborhoods   = neighborhoods,
+                                            categories      = categories,
+                                            cuisines        = cuisines,
+                                            cities          = cities,
+                                            diets           = diets)

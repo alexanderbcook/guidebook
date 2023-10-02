@@ -3,11 +3,11 @@ html {
  color: #F93943;
  font-size: 16px;
  font-family: "Poppins", sans-serif;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.5;
-  min-width: 300px;
-  overflow-x: hidden;
+ -moz-osx-font-smoothing: grayscale;
+ -webkit-font-smoothing: antialiased;
+ line-height: 1.5;
+ min-width: 300px;
+ overflow-x: hidden;
  font-weight: 500;
 }
 

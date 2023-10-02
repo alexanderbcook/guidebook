@@ -10,10 +10,13 @@ nav {
  background-color: #FCB0B3;
  padding: 1.5rem 7rem 1.25rem 7rem;
 }
-
+.nav_link:hover, .cat_button_selected, .modal_close_button:hover{
+ background-color: #FAA2A4;
+ color: white
+}
 .nav_title {
- font-size: 1.75rem;
- font-weight: 800;
+ font-size: 1.85rem;
+ font-weight: 900;
  text-transform: uppercase;
  position: relative;
  margin-left: 10px;

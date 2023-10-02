@@ -8,7 +8,8 @@ html {
   line-height: 1.5;
   min-width: 300px;
   overflow-x: hidden;
- font-weight: 500;
+  overflow-y: hidden;
+  font-weight: 500;
 }
 
 body {
