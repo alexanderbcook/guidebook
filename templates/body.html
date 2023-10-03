@@ -13,8 +13,22 @@
       <div class="lower_wrapper">
       <p class="listings_title">{{r.fields.Name}}</p>
       <p class="listings_subtitle">
+        {% if r.fields.Description|length < 175 %}
         {{ r.fields.Description }}
-      </p>   
+        {% else %}
+        {{ r.fields.Description|truncate(175, False, '...')}}
+        {% endif %}
+      </p> 
+      <hr />
+      {% if 'Tags' in r.fields %}
+      <p class="listings_tags">
+        <i>{% for t in r.fields.Tags %}
+          &#x2022;&nbsp{{t.lower()}}
+          {% endfor %}
+          &#x2022;
+        </i>
+      </p>
+      {% endif %}
     </div></a>
     <dialog id="{{'modal-'+r.id}}">
       <div class="listings_wrapper">
@@ -31,16 +45,15 @@
           </figure>
           {% endif %}
           <div class="lower_wrapper">
-            <p class="listings_title">{{r.fields.Name}}</p>
-            <p class="listings_subtitle">{{r.fields.Description}}</p>
-            {% if 'Address' in r.fields %}
-            <p class="listings_subtitle">{{r.fields.Address}}{% if 'Cities' in r.fields%}{{', '+r.fields.Cities[0]}}{% endif %}</p>
+            <h3 class="listings_title">{{r.fields.Name}}</h3>
+            {% if 'Neighborhood' in r.fields%}
+            <p class="listings_subtitle">{{r.fields.Neighborhood[0] | trim}}</p>
             {% endif %}
-            {% if 'Tags' in r.fields %}
-            <p class="listings_"><i>tags: {% for t in r.fields.Tags %}{{t.lower() + ', '}}{% endfor %}</i></p>
+            <p class="listings_subtitle" style="min-height:15em">{{r.fields.Description | trim}}</p>
+            {% if 'Address' in r.fields %}
+            <p class="listings_subtitle">{{r.fields.Address | trim}}{% if 'Cities' in r.fields%}{{', '+r.fields.Cities[0] | trim}}{% endif %}</p>
             {% endif %}
           </div>
-
       </div>
     </dialog>
 
@@ -48,13 +61,13 @@
  {% endfor %}
 </div>
 <script>
-
+  var modal;
   const buttons = document.querySelectorAll('.openModal');
 
   buttons.forEach((button) => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
-      const modal = document.getElementById('modal-'+button.id);
+      modal = document.getElementById('modal-'+button.id);
       modal.showModal();
     });
   });
@@ -64,7 +77,7 @@
   closeButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
-      const modal = document.getElementById(button.id.replace('close-','modal-'));
+      modal = document.getElementById(button.id.replace('close-','modal-'));
       modal.close();
     })
   })

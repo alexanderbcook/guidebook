@@ -1,5 +1,6 @@
-nav { 
-  margin-bottom: 2rem; 
+.link_list{
+  display:flex;  
+  list-style:none;
 }
 .nav_wrapper {
  line-height: 1;
@@ -8,10 +9,10 @@ nav {
  align-items: center;
  color: #F93943;
  background-color: #FCB0B3;
- padding: 1.5rem 7rem 1.25rem 7rem;
+ padding: 0rem 3.5rem 0rem 3.5rem;
 }
 .nav_link:hover, .cat_button_selected, .modal_close_button:hover{
- background-color: #FAA2A4;
+ background-color: #FCB0B3;
  color: white
 }
 .nav_title {

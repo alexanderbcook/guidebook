@@ -12,6 +12,7 @@ css_bundle = Bundle('css/global.css',
           'css/nav.css',
           'css/body.css',
           'css/categories.css',
+          'css/about.css',
           filters='cssmin', output='css/styles.css')
 
 assets = Environment(app)
@@ -39,7 +40,6 @@ swap_ids_to_names(recommendations, diets,           'Diets')
 
 @app.route("/")
 def return_recommendations():
-    print(recommendations)
     return render_template("base.html",  recommendations = recommendations,
                                          neighborhoods   = neighborhoods,
                                          categories      = categories,
@@ -71,3 +71,7 @@ def return_additional_info(name):
                                             cuisines        = cuisines,
                                             cities          = cities,
                                             diets           = diets)
+
+@app.route("/about/")
+def return_about():
+    return render_template("about.html")
