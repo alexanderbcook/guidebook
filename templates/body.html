@@ -39,19 +39,18 @@
               cross-origin="use-credentials"
               class="listings_img" 
               src="{{ r.fields.Pictures[0].url }}"
-              style="width: 25vw; min-width:330px;"
             />
             <figcaption><i>PC: {{r.fields.Photo_Credit}}</i></figcaption>
           </figure>
           {% endif %}
           <div class="lower_wrapper">
-            <h3 class="listings_title">{{r.fields.Name}}</h3>
+            <h3 class="modal_title">{{r.fields.Name}}</h3>
             {% if 'Neighborhood' in r.fields%}
-            <p class="listings_subtitle">{{r.fields.Neighborhood[0] | trim}}</p>
+            <p class="modal_subtitle">{{r.fields.Neighborhood[0] | trim}}</p>
             {% endif %}
-            <p class="listings_subtitle" style="min-height:15em">{{r.fields.Description | trim}}</p>
+            <p class="modal_subtitle">{{r.fields.Description | trim}}</p>
             {% if 'Address' in r.fields %}
-            <p class="listings_subtitle">{{r.fields.Address | trim}}{% if 'Cities' in r.fields%}{{', '+r.fields.Cities[0] | trim}}{% endif %}</p>
+            <p class="modal_subtitle">{{r.fields.Address | trim}}{% if 'Cities' in r.fields%}{{', '+r.fields.Cities[0] | trim}}{% endif %}</p>
             {% endif %}
           </div>
       </div>
@@ -62,7 +61,7 @@
 </div>
 <script>
   var modal;
-  const buttons = document.querySelectorAll('.openModal');
+  var buttons = document.querySelectorAll('.openModal');
 
   buttons.forEach((button) => {
     button.addEventListener('click', (event) => {
@@ -72,7 +71,7 @@
     });
   });
 
-  const closeButtons = document.querySelectorAll('.closeModal');
+  var closeButtons = document.querySelectorAll('.closeModal');
 
   closeButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
@@ -82,10 +81,10 @@
     })
   })
 
-  const modals = document.querySelectorAll('dialog');
+  var modals = document.querySelectorAll('dialog');
   modals.forEach((modal) => {
     modal.addEventListener("click", event => {
-      const modalDimensions = modal.getBoundingClientRect();
+      var modalDimensions = modal.getBoundingClientRect();
       if (
         event.clientX < modalDimensions.left ||
         event.clientX > modalDimensions.right ||

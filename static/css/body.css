@@ -22,7 +22,6 @@ hr {
  max-height: 100%;
  padding: 3rem;
 }
-
 .listings_item {
  border-radius: 12.5px;
  display: flex;
@@ -34,7 +33,6 @@ hr {
  margin: 0 1rem 4rem 1rem;
  min-height: 22em;
 }
-
 .listings_tags {
   color: black;
   display: flex;
@@ -46,9 +44,12 @@ hr {
 .listings_item:hover{
   background-color:  #FCD0D1;
 }
-.listings_img { margin-bottom: 0.75rem;
-                border-radius: 12.5px; }
-
+.listings_img { 
+    margin-bottom: 0.75rem;
+    border-radius: 12.5px; 
+    width: 25vw; 
+    min-width:330px;
+}
 .lower_wrapper {
  display: flex;
  padding: 1rem;
@@ -63,6 +64,21 @@ hr {
  margin-bottom: 1rem;
  color: #F93943;
  min-height: 4rem;
+}
+
+.modal_title {
+ font-size: 1.3rem; 
+ color: #F93943;
+ padding:1px;
+ margin:10px;
+}
+
+.modal_subtitle {
+ color: black;
+ text-align: center;
+ font-weight: 400;
+ padding:0.5px;
+ margin:5px;
 }
 
 .listings_subtitle {
@@ -83,7 +99,7 @@ hr {
 
 dialog {
   position: relative;
-  border-radius: 12.5px;
+  border-radius: 15px;
   padding: 0.8rem;
   border: none;
   background-color: #FFCCCD;
