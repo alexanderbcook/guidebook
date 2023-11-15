@@ -1,16 +1,30 @@
-<ul class="cat_flex_wrapper">
- <li class="cat_flex_item">
-  <a class="cat_button"
-    href="/">
-   <b>All</b>
-  </a>
- </li>
- {% for cat in categories %}
-  <li class="cat_flex_item">      
-   <a class="cat_button"
-    href="/category/{{cat.fields.Name}}">
-    <b>{{ cat.fields.Name}}</b>
-   </a>
-  </li>
- {% endfor %}
-</ul>
+<div class="text-center">
+  <h2 id="bodyTitle">The List</b></h2>
+  <a class="btn" role="button" href="/">Everything</a>
+  {% for cat in categories %}
+  <a class="btn" role="button" href="/category/{{cat.fields.Name}}">{{cat.fields.Name}}</a>
+  {% endfor %}
+</div>
+<style>
+  .btn{
+    border-color:black;
+  }
+  .btn:hover{
+    border-color:black;
+  }
+</style>
+<script>
+  const currentPathName = window.location.pathname;
+  if(currentPathName == "/"){
+    document.getElementById("bodyTitle").innerHTML = "The List"
+  }
+  if(currentPathName == "/category/Activities"){
+    document.getElementById("bodyTitle").innerHTML = "The Activities"
+  }
+  if(currentPathName == "/category/Restaurants"){
+    document.getElementById("bodyTitle").innerHTML = "The Restaurants"
+  }
+  if(currentPathName == "/category/Bars"){
+    document.getElementById("bodyTitle").innerHTML = "The Bars"
+  }
+</script>

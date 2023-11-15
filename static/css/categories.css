@@ -1,30 +1,3 @@
-.cat_flex_wrapper {
- display: flex;
- justify-content: center;
- margin-bottom: 2rem;
- flex-wrap: wrap;
+body {
+  font-family: 'Oswald', sans-serif !important;
 }
-
-.cat_flex_item { margin: 15px 10px 15px 10px }
-
-.cat_button, .cat_button_selected, .modal_close_button { 
- color: #F93943;
- border: 2px solid;
- background-color: #FFCCCD; 
-
- border-radius: 7.5px;
- font-size: 1.1rem;
- font-weight: 500; 
- text-transform: capitalize;
- padding: 10px 1.5rem 10px 1.5rem;
-}
-
-.cat_button:hover, .cat_button_selected, .modal_close_button:hover {
- background-color: #FAA2A4;
- color: white
-}
-.cat_button_selected {
- background-color: #5D16A5;
- color: white
-}
-

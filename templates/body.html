@@ -1,100 +1,99 @@
 
-
-
-
-<h2 class="section_title"><i><b>The List</b></i></h2>
-
 {% include 'categories.html' %}
-<div class="listings_wrapper">
-
+<div class="row rows-cols-auto">
  {% for r in recommendations %} 
- <div class="listings_item">  
-    <a class="openModal" id="{{r.id}}">    
-      <div class="lower_wrapper">
-      <p class="listings_title">{{r.fields.Name}}</p>
-      <p class="listings_subtitle">
-        {% if r.fields.Description|length < 175 %}
-        {{ r.fields.Description }}
-        {% else %}
-        {{ r.fields.Description|truncate(175, False, '...')}}
-        {% endif %}
-      </p> 
-      <hr />
-      {% if 'Tags' in r.fields %}
-      <p class="listings_tags">
-        <i>{% for t in r.fields.Tags %}
-          &#x2022;&nbsp{{t.lower()}}
-          {% endfor %}
-          &#x2022;
-        </i>
-      </p>
-      {% endif %}
-    </div></a>
-    <dialog id="{{'modal-'+r.id}}">
-      <div class="listings_wrapper">
-          <button class="closeModal" id="{{'close-'+r.id}}">X</button>
-          {% if 'Pictures' in r.fields %}
-          <figure>
-            <img
-              cross-origin="use-credentials"
-              class="listings_img" 
-              src="{{ r.fields.Pictures[0].url }}"
-            />
-            <figcaption><i>PC: {{r.fields.Photo_Credit}}</i></figcaption>
-          </figure>
+ <div class="col" style="margin-top:1rem;">
+    <!-- Card -->
+    <button class="card" data-bs-toggle="modal" data-bs-target="#{{r.id}}">
+      <div class="card-body">
+        <h5 class="card-title">{{r.fields.Name}}</h5>
+        <p class="card-text">        
+          {% if r.fields.Description|length < 150 %}
+          {{ r.fields.Description }}
+          {% else %}
+          {{ r.fields.Description|truncate(125, False, '...')}}
           {% endif %}
-          <div class="lower_wrapper">
-            <h3 class="modal_title">{{r.fields.Name}}</h3>
-            {% if 'Neighborhood' in r.fields%}
-            <p class="modal_subtitle">{{r.fields.Neighborhood[0] | trim}}</p>
-            {% endif %}
-            <p class="modal_subtitle">{{r.fields.Description | trim}}</p>
-            {% if 'Address' in r.fields %}
-            <p class="modal_subtitle">{{r.fields.Address | trim}}{% if 'Cities' in r.fields%}{{', '+r.fields.Cities[0] | trim}}{% endif %}</p>
-            {% endif %}
-          </div>
+        </p>
+        <hr/>
+        {% if 'Tags' in r.fields %}
+        <p>
+          <i>{% for t in r.fields.Tags %}
+            &#x2022;&nbsp{{t.lower()}}
+            {% endfor %}
+            &#x2022;
+          </i>
+        </p>
+        {% endif %}
       </div>
-    </dialog>
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="{{r.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-body">
+            {% if 'Pictures' in r.fields %}
+            <figure>
+              <img
+                class="img-fluid"
+                cross-origin="use-credentials"
+                class="listings_img" 
+                src="{{ r.fields.Pictures[0].url }}"
+              />
+              <figcaption><i>PC: {{r.fields.Photo_Credit}}</i></figcaption>
+            </figure>
+            {% endif %}
+            <h3 class="card-title">{{r.fields.Name}}</h3>
+            {% if 'Neighborhood' in r.fields%}
+            <p class="card-text">{{r.fields.Neighborhood[0] | trim}}</p>
+            {% endif %}
+            <p class="card-text">{{r.fields.Description | trim}}</p>
+            {% if 'Address' in r.fields %}
+            <p class="card-text">{{r.fields.Address | trim}}{% if 'Cities' in r.fields%}{{', '+r.fields.Cities[0] | trim}}{% endif %}</p>
+            {% endif %}          
+          </div>
+        </div>
+      </div>
+    </div>
 
- </div>
+  </div>
+
  {% endfor %}
 </div>
-<script>
-  var modal;
-  var buttons = document.querySelectorAll('.openModal');
+<style>
+ /* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .card{
+    width:10rem;
+  }
+}
 
-  buttons.forEach((button) => {
-    button.addEventListener('click', (event) => {
-      event.preventDefault();
-      modal = document.getElementById('modal-'+button.id);
-      modal.showModal();
-    });
-  });
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {  
+  .card{
+    width:10rem;
+  }
+}
 
-  var closeButtons = document.querySelectorAll('.closeModal');
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .card{
+    width:10rem;
+  }
+}
 
-  closeButtons.forEach((button) => {
-    button.addEventListener('click', (event) => {
-      event.preventDefault();
-      modal = document.getElementById(button.id.replace('close-','modal-'));
-      modal.close();
-    })
-  })
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .card{
+    width:16rem;
+    height:100%;
+  }
+}
 
-  var modals = document.querySelectorAll('dialog');
-  modals.forEach((modal) => {
-    modal.addEventListener("click", event => {
-      var modalDimensions = modal.getBoundingClientRect();
-      if (
-        event.clientX < modalDimensions.left ||
-        event.clientX > modalDimensions.right ||
-        event.clientY < modalDimensions.top ||
-        event.clientY > modalDimensions.bottom
-      ) {
-        modal.close();
-         }
-    })
-  })
-
-</script>
-
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .card{
+    width:16rem;
+    height:100%;
+  }
+} 
+</style>

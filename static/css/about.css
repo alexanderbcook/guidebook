@@ -1,18 +1,3 @@
-.about_container {
- border-radius: 12.5px;
- display: flex;
- flex-wrap: wrap;
- text-align: left;
- justify-content: center;
- box-shadow: 2px 3px 2px rgb(0 0 0 / 5%);
- background-color: #FFCCCD;
- margin: 0 1rem 4rem 1rem;
- max-width:66%;
-}
-.about_wrapper {
- display: flex;
- padding: 1rem;
- flex-direction: column;
- align-items: center;
- max-width:90%;
+body {
+  font-family: 'Material+Icons', sans-serif !important;
 }

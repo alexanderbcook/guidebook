@@ -1,18 +1,31 @@
-<nav role="navigation">
-  <div class="nav_wrapper">
-    <div class="logo_wrapper">   
-      <h1 class="nav_title"><i>Riley's Recs</i></h1>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">RILEY'S RECS</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            RECOMMENDATIONS
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/">EVERYTHING</a></li>
+            <li><a class="dropdown-item" href="/category/Bars">BARS</a></li>
+            <li><a class="dropdown-item" href="/category/Restaurants">RESTAURANTS</a></li>
+            <li><a class="dropdown-item" href="/category/Activities">ACTIVITIES</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">ITINERARIES</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about/">ABOUT</a>
+        </li>
+      </ul>
     </div>
-  <div class="contact_wrapper">
-    <ul class="link_list">
-      <li>
-      <h3 class="nav_link"><a hx-get="/" hx-target="body"><i>HOME</i></a></h3></li>
-      <h3>&nbsp&nbsp●&nbsp&nbsp</h3>
-      <li>
-      <h3 class="nav_link"><a hx-get="/" hx-target="body"><i>ITINERARIES</i></a></h3></li>
-      <h3>&nbsp&nbsp●&nbsp&nbsp</h3>
-      <li>
-      <h3 class="nav_link"><a hx-get="/about/" hx-target="body"><i>ABOUT</i></a></h3></li>
-    </ul>
- </div>
+  </div>
 </nav>
+<style>
+</style>

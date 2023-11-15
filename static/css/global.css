@@ -1,37 +1,3 @@
-html {
- background-color: #FCB0B3;
- color: #F93943;
- font-size: 16px;
- font-family: "Poppins", sans-serif;
- -moz-osx-font-smoothing: grayscale;
- -webkit-font-smoothing: antialiased;
- line-height: 1.5;
- min-width: 300px;
- overflow-x: hidden;
- font-weight: 500;
-}
-
 body {
- min-height: 100vh;
- display: flex;
- flex-direction: column;
-}
-
-a {
-  color: currentColor;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-img {
- vertical-align: middle;
-}
-
-/* Mobile */
-section {
- padding: 2rem 2rem;
-}
-/* Desktop */
-@media screen and (min-width: 768px) {
-  section { padding-bottom: 1rem; }
+  font-family: 'Material+Icons', sans-serif !important;
 }
