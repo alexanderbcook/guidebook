@@ -4,7 +4,15 @@
   <body> 
     <div class="container">
     {% include 'nav.html' %}
+    {% include 'categories.html' %}
     {% include 'body.html' %}
     </div>
   </body>
 </html>
+<style type="text/css">
+</style>
+<script>
+function setTitle(name){
+  document.getElementById("body-title").innerHTML = "The "+name
+}
+</script>

@@ -1,6 +1,5 @@
 
-{% include 'categories.html' %}
-<div class="row rows-cols-auto">
+<div class="row rows-cols-auto" id="recommendation-grid">
  {% for r in recommendations %} 
  <div class="col" style="margin-top:1rem;">
     <!-- Card -->
@@ -31,6 +30,7 @@
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-body">
+            <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
             {% if 'Pictures' in r.fields %}
             <figure>
               <img
@@ -48,7 +48,7 @@
             {% endif %}
             <p class="card-text">{{r.fields.Description | trim}}</p>
             {% if 'Address' in r.fields %}
-            <p class="card-text">{{r.fields.Address | trim}}{% if 'Cities' in r.fields%}{{', '+r.fields.Cities[0] | trim}}{% endif %}</p>
+            <a class="card-text" href="{{r.fields.MapLink}}">{{r.fields.Address | trim}}{% if 'Cities' in r.fields%}{{', '+r.fields.Cities[0] | trim}}{% endif %}</a>
             {% endif %}          
           </div>
         </div>

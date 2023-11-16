@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">RILEY'S RECS</a>
+    <a class="navbar-brand" href="/"><i>RILEY'S RECS</i></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -8,24 +8,25 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            RECOMMENDATIONS
+            <i>RECOMMENDATIONS</i>
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/">EVERYTHING</a></li>
-            <li><a class="dropdown-item" href="/category/Bars">BARS</a></li>
-            <li><a class="dropdown-item" href="/category/Restaurants">RESTAURANTS</a></li>
-            <li><a class="dropdown-item" href="/category/Activities">ACTIVITIES</a></li>
+            <li><a class="dropdown-item" hx-get="/" hx-target="body"hx-on::after-request="setTitle('List')" >EVERYTHING</a></li>
+            <li><a class="dropdown-item" hx-get="/category/Bars" hx-target="#recommendation-grid" hx-on::after-request="setTitle('Bars')">BARS</a></li>
+            <li><a class="dropdown-item" hx-get="/category/Restaurants" hx-target="#recommendation-grid" hx-on::after-request="setTitle('Restaurants')">RESTAURANTS</a></li>
+            <li><a class="dropdown-item" hx-get="/category/Activities"  hx-target="#recommendation-grid" hx-on::after-request="setTitle('Activites')">ACTIVITIES</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#">ITINERARIES</a>
+          <a class="nav-link disabled" href="#"><i>ITINERARIES</i></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/about/">ABOUT</a>
+          <a class="nav-link" href="/about/"><i>ABOUT</i></a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
 <style>
+
 </style>

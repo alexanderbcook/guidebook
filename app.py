@@ -52,7 +52,7 @@ def filter_by_category(category):
     filtered_recommendations = []
     filter_recommendations(recommendations, filtered_recommendations, category)
     
-    return render_template("base.html",  recommendations = filtered_recommendations,
+    return render_template("body.html",  recommendations = filtered_recommendations,
                                          neighborhoods   = neighborhoods, 
                                          categories      = categories,
                                          cuisines        = cuisines,

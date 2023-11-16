@@ -1,30 +1,7 @@
 <div class="text-center">
-  <h2 id="bodyTitle">The List</b></h2>
-  <a class="btn" role="button" href="/">Everything</a>
+  <h2 id="body-title">The List</b></h2>
+  <a class="btn" role="button" hx-target="body" hx-get="/" hx-on::after-request="setTitle('List')">Everything</a>
   {% for cat in categories %}
-  <a class="btn" role="button" href="/category/{{cat.fields.Name}}">{{cat.fields.Name}}</a>
+  <a class="btn" role="button" hx-target="#recommendation-grid" hx-get="/category/{{cat.fields.Name}}" hx-on::after-request="setTitle('{{cat.fields.Name}}')">{{cat.fields.Name}}</a>
   {% endfor %}
 </div>
-<style>
-  .btn{
-    border-color:black;
-  }
-  .btn:hover{
-    border-color:black;
-  }
-</style>
-<script>
-  const currentPathName = window.location.pathname;
-  if(currentPathName == "/"){
-    document.getElementById("bodyTitle").innerHTML = "The List"
-  }
-  if(currentPathName == "/category/Activities"){
-    document.getElementById("bodyTitle").innerHTML = "The Activities"
-  }
-  if(currentPathName == "/category/Restaurants"){
-    document.getElementById("bodyTitle").innerHTML = "The Restaurants"
-  }
-  if(currentPathName == "/category/Bars"){
-    document.getElementById("bodyTitle").innerHTML = "The Bars"
-  }
-</script>
