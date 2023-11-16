@@ -1,16 +1,23 @@
 
 <div class="row rows-cols-auto" id="recommendation-grid">
  {% for r in recommendations %} 
- <div class="col" style="margin-top:1rem;">
+ <div class="col">
     <!-- Card -->
     <button class="card" data-bs-toggle="modal" data-bs-target="#{{r.id}}">
       <div class="card-body">
         <h5 class="card-title">{{r.fields.Name}}</h5>
-        <p class="card-text">        
+        <p class="card-text" id="desktop-text">        
           {% if r.fields.Description|length < 150 %}
           {{ r.fields.Description }}
           {% else %}
-          {{ r.fields.Description|truncate(125, False, '...')}}
+          {{ r.fields.Description|truncate(150, False, '...')}}
+          {% endif %}
+        </p>
+        <p class="card-text" id="mobile-text">        
+          {% if r.fields.Description|length < 35 %}
+          {{ r.fields.Description }}
+          {% else %}
+          {{ r.fields.Description|truncate(35, False, '...')}}
           {% endif %}
         </p>
         <hr/>
@@ -48,23 +55,27 @@
             {% endif %}
             <p class="card-text">{{r.fields.Description | trim}}</p>
             {% if 'Address' in r.fields %}
-            <a class="card-text" href="{{r.fields.MapLink}}">{{r.fields.Address | trim}}{% if 'Cities' in r.fields%}{{', '+r.fields.Cities[0] | trim}}{% endif %}</a>
+            <a class="card-text" target="_blank" rel="noopener noreferrer" href="{{r.fields.MapLink}}">{{r.fields.Address | trim}}{% if 'Cities' in r.fields%}{{', '+r.fields.Cities[0] | trim}}{% endif %}</a>
             {% endif %}          
           </div>
         </div>
       </div>
     </div>
-
   </div>
-
  {% endfor %}
 </div>
 <style>
- /* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
+
+#mobile-text{
+  display:none;
+  visibility:hidden;
+}
+@media only screen and (max-width: 900px) {
   .card{
     width:10rem;
   }
+  #desktop-text { display: none !important; }
+  #mobile-text  { display: block; visibility: visible; }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
