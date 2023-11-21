@@ -1,5 +1,5 @@
 <div class="text-center">
-  <h2 id="body-title">The List</b></h2>
+  <h2 id="body-title"><i>The List</i></h2>
   <a class="btn btn-sm" role="button" hx-target="body" hx-get="/" hx-on::after-request="setTitle('List')">Everything</a>
   {% for cat in categories %}
   <a class="btn btn-sm" role="button" hx-target="#recommendation-grid" hx-get="/category/{{cat.fields.Name}}" hx-on::after-request="setTitle('{{cat.fields.Name}}')">{{cat.fields.Name}}</a>
