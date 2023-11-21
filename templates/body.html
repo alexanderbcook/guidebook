@@ -24,9 +24,8 @@
         {% if 'Tags' in r.fields %}
         <p>
           <i>{% for t in r.fields.Tags %}
-            &#x2022;&nbsp{{t.lower()}}
+              {{t.lower()}}&nbsp
             {% endfor %}
-            &#x2022;
           </i>
         </p>
         {% endif %}
@@ -35,10 +34,12 @@
     <!-- Modal -->
     <div class="modal fade" id="{{r.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
+        <div class="modal-content rounded-4">
           <div class="modal-body">
             <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
             {% if 'Pictures' in r.fields %}
+            <br>
+            <hr>
             <figure>
               <img
                 class="img-fluid"
