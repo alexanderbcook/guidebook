@@ -25,12 +25,12 @@ cuisines        = []
 cities          = []
 diets           = []
 
-recommendations = get_data("Main List"    , recommendations)
-neighborhoods   = get_data("Neighborhoods"  , neighborhoods)
-categories      = get_data("Categories"     , categories)
-cuisines        = get_data("Cuisines"       , cuisines)
-cities          = get_data("Cities"         , cities)
-diets           = get_data("Special Diets"  , diets)
+recommendations = get_data("Main List"      , recommendations, True)
+neighborhoods   = get_data("Neighborhoods"  , neighborhoods, False)
+categories      = get_data("Categories"     , categories, False)
+cuisines        = get_data("Cuisines"       , cuisines, False)
+cities          = get_data("Cities"         , cities, False)
+diets           = get_data("Special Diets"  , diets, False)
 
 swap_ids_to_names(recommendations, neighborhoods,   'Neighborhood')
 swap_ids_to_names(recommendations, categories,      'Categories')

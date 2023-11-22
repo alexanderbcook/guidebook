@@ -27,9 +27,12 @@ def timer(func):
 ### Data layer manipulation utilities.
 
 @timer
-def get_data(name, container):
+def get_data(name, container,sort):
     table = Table(AIRTABLE_SECRET_TOKEN, AIRTABLE_BASE_ID, name)
-    container = table.all()
+    if sort:
+        container = table.all(sort=["-LastModified"])
+    else:        
+        container = table.all()
 
     return container
 
