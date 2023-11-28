@@ -24,7 +24,7 @@
         {% if 'Tags' in r.fields %}
         <p>
           <i>{% for t in r.fields.Tags %}
-              {{t.lower()}}&nbsp
+              {{t.lower() | trim}}&nbsp
             {% endfor %}
           </i>
         </p>
