@@ -37,17 +37,16 @@
         <div class="modal-content rounded-4">
           <div class="modal-body">
             <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
-            {% if 'Pictures' in r.fields %}
+            {% if 'PhotoLink' in r.fields %}
             <br>
             <hr>
             <figure>
               <img
                 class="img-fluid"
-                cross-origin="use-credentials"
-                class="listings_img" 
-                src="{{ r.fields.Pictures[0].url }}"
+                cross-origin
+                src="{{ r.fields.PhotoLink }}"
               />
-              <figcaption><i>PC: {{r.fields.Photo_Credit}}</i></figcaption>
+              <figcaption><i>PC: {{r.fields.PhotoCredit}}</i></figcaption>
             </figure>
             {% endif %}
             <h3 class="card-title">{{r.fields.Name}}</h3>
