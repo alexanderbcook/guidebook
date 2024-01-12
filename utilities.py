@@ -19,7 +19,7 @@ def timer(func):
         result = func(*args, **kwargs)
         end_time = time.time()
         execution_time = end_time - start_time
-        print(f"Calling {func.__name__}.") 
+        print(f"Calling {func.__name__}.")
         print(f"Execution time: {execution_time} seconds.")
         return result
     return wrapper
@@ -31,7 +31,7 @@ def get_data(name, container,sort):
     table = Table(AIRTABLE_SECRET_TOKEN, AIRTABLE_BASE_ID, name)
     if sort:
         container = table.all(sort=["-LastModified"])
-    else:        
+    else:
         container = table.all()
 
     return container
@@ -62,7 +62,6 @@ def get_unique_list(recommendations, name):
                 i+=1
 
     unique_list = list(OrderedDict.fromkeys(bulk_list))
-    
     return unique_list
 
 @timer
@@ -75,10 +74,8 @@ def filter_recommendations(recommendations, container, category):
     return container
 
 @timer
-def fetch_additional_info(recommendations, container, name):
+def fetch_additional_info(recommendations, container, recommendation_id):
     for recommendation in recommendations:
-        if "Name" in recommendation["fields"].keys():
-            if recommendation["fields"]["Name"] == name:
-                container.append(recommendation)
+        if recommendation_id == recommendation["id"]:
+            container.append(recommendation)
     return container
-

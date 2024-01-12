@@ -4,4 +4,4 @@ set -a
 source config.env
 set +a
 
-uvicorn app:app --reload
+python3 -m uvicorn app:app --reload

@@ -1,0 +1,29 @@
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content rounded-4">
+          <div class="modal-body" id="modal-data-body">
+            <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+            {% for a in additional_info %}
+            {% if 'PhotoLink' in a.fields %}
+            <br>
+            <hr>
+            <figure>
+              <img
+                class="img-fluid"
+                cross-origin
+                src="{{ a.fields.PhotoLink }}"
+              />
+              <figcaption><i>PC: {{a.fields.PhotoCredit}}</i></figcaption>
+            </figure>
+            {% endif %}
+            <h3 class="card-title">{{a.fields.Name}}</h3>
+            {% if 'Neighborhood' in a.fields%}
+            <p class="card-text">{{a.fields.Neighborhood[0] | trim}}</p>
+            {% endif %}
+            <p class="card-text">{{a.fields.Description | trim}}</p>
+            {% if 'Address' in a.fields %}
+            <a class="card-text" target="_blank" rel="noopener noreferrer" href="{{a.fields.MapLink}}">{{a.fields.Address | trim}}{% if 'Cities' in a.fields%}{{', '+a.fields.Cities[0] | trim}}{% endif %}</a>
+            {% endif %}     
+            {% endfor %}     
+          </div>
+        </div>
+      </div>

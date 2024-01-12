@@ -1,10 +1,8 @@
-from typing import Union
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
 from utilities import   (get_data,
                         swap_ids_to_names,
                         filter_recommendations,
@@ -25,6 +23,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 recommendations = []
+additional_info = []
 neighborhoods   = []
 categories      = []
 cuisines        = []
@@ -38,6 +37,8 @@ cuisines        = get_data("Cuisines"       , cuisines, False)
 cities          = get_data("Cities"         , cities, False)
 diets           = get_data("Special Diets"  , diets, False)
 
+additional_info = fetch_additional_info(recommendations, additional_info, "recIcE33gVVpc56zh")
+
 swap_ids_to_names(recommendations, neighborhoods,   'Neighborhood')
 swap_ids_to_names(recommendations, categories,      'Categories')
 swap_ids_to_names(recommendations, cuisines,        'Cuisine')
@@ -46,51 +47,33 @@ swap_ids_to_names(recommendations, diets,           'Diets')
 
 @app.get("/", response_class=HTMLResponse)
 def return_recommendations(request: Request):
-    
     context = {
         "request": request,
         "recommendations": recommendations,
-        "neighborhoods": neighborhoods,
+        "additional_info": additional_info,
         "categories": categories,
-        "cuisines": cuisines,
-        "cities": cities,
-        "diets": diets
     }
     return templates.TemplateResponse("base.html", context)
 
-@app.get("/category/{categoryName}", response_class=HTMLResponse)
-def return_filtered_recommendations(request: Request, categoryName: str):
-
+@app.get("/category/{category_name}", response_class=HTMLResponse)
+def return_filtered_recommendations(request: Request, category_name: str):
     filtered_recommendations = []
-    filter_recommendations(recommendations, filtered_recommendations, categoryName)
-    
+    filter_recommendations(recommendations, filtered_recommendations, category_name)
+
     context = {
         "request": request,
-        "recommendations": filtered_recommendations,
-        "neighborhoods": neighborhoods,
-        "categories": categories,
-        "cuisines": cuisines,
-        "cities": cities,
-        "diets": diets
+        "recommendations": filtered_recommendations
     }
     return templates.TemplateResponse("body.html", context)
 
-@app.route("/recommendation/{recommendationName}")
-def return_additional_info(request: Request, recommendationName: str):
-    additional_info = []
-    fetch_additional_info(recommendations, additional_info, recommendationName)
-    
+@app.get("/recommendation/{recommendation_id}", response_class=HTMLResponse)
+def return_additional_info(request: Request, recommendation_id: str):
+    fetch_additional_info(recommendations, additional_info, recommendation_id)
     context = {
         "request": request,
-        "recommendations": filtered_recommendations,
-        "additional_info": additional_info,
-        "neighborhoods": neighborhoods,
-        "categories": categories,
-        "cuisines": cuisines,
-        "cities": cities,
-        "diets": diets
+        "additional_info": additional_info
     }
-    return templates.TemplateResponse("body.html", context)
+    return templates.TemplateResponse("modal.html", context)
 
 @app.get("/itineraries/", response_class=HTMLResponse)
 def return_itineraries(request: Request):
