@@ -23,7 +23,6 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 recommendations = []
-additional_info = []
 neighborhoods   = []
 categories      = []
 cuisines        = []
@@ -37,8 +36,6 @@ cuisines        = get_data("Cuisines"       , cuisines, False)
 cities          = get_data("Cities"         , cities, False)
 diets           = get_data("Special Diets"  , diets, False)
 
-additional_info = fetch_additional_info(recommendations, additional_info, "recIcE33gVVpc56zh")
-
 swap_ids_to_names(recommendations, neighborhoods,   'Neighborhood')
 swap_ids_to_names(recommendations, categories,      'Categories')
 swap_ids_to_names(recommendations, cuisines,        'Cuisine')
@@ -50,7 +47,6 @@ def return_recommendations(request: Request):
     context = {
         "request": request,
         "recommendations": recommendations,
-        "additional_info": additional_info,
         "categories": categories,
     }
     return templates.TemplateResponse("base.html", context)
@@ -68,7 +64,9 @@ def return_filtered_recommendations(request: Request, category_name: str):
 
 @app.get("/recommendation/{recommendation_id}", response_class=HTMLResponse)
 def return_additional_info(request: Request, recommendation_id: str):
+    additional_info = []
     fetch_additional_info(recommendations, additional_info, recommendation_id)
+
     context = {
         "request": request,
         "additional_info": additional_info
