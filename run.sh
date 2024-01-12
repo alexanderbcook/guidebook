@@ -4,4 +4,4 @@ set -a
 source config.env
 set +a
 
-uvicorn main:app --reload
+uvicorn app:app --reload

@@ -1,22 +1,28 @@
-from flask import Flask
-from flask import render_template, request
-from flask_assets import Bundle, Environment
+from typing import Union
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
 from utilities import   (get_data,
                         swap_ids_to_names,
                         filter_recommendations,
                         fetch_additional_info)
 
-app = Flask(__name__)
+app = FastAPI()
 
-css_bundle = Bundle('css/global.css',
-          'css/nav.css',
-          'css/body.css',
-          'css/categories.css',
-          'css/about.css',
-          filters='cssmin', output='css/styles.css')
+origins = ["*"]
+app.add_middleware(
+ CORSMiddleware,
+ allow_origins=origins,
+ allow_credentials=True,
+ allow_methods=["*"],
+ allow_headers=["*"],
+)
 
-assets = Environment(app)
-assets.register('main_styles', css_bundle)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 recommendations = []
 neighborhoods   = []
@@ -38,40 +44,67 @@ swap_ids_to_names(recommendations, cuisines,        'Cuisine')
 swap_ids_to_names(recommendations, cities,          'Cities')
 swap_ids_to_names(recommendations, diets,           'Diets')
 
-@app.route("/")
-def return_recommendations():
-    return render_template("base.html",  recommendations = recommendations,
-                                         neighborhoods   = neighborhoods,
-                                         categories      = categories,
-                                         cuisines        = cuisines,
-                                         cities          = cities,
-                                         diets           = diets)
+@app.get("/", response_class=HTMLResponse)
+def return_recommendations(request: Request):
+    
+    context = {
+        "request": request,
+        "recommendations": recommendations,
+        "neighborhoods": neighborhoods,
+        "categories": categories,
+        "cuisines": cuisines,
+        "cities": cities,
+        "diets": diets
+    }
+    return templates.TemplateResponse("base.html", context)
 
-@app.route("/category/<category>")
-def filter_by_category(category):
+@app.get("/category/{categoryName}", response_class=HTMLResponse)
+def return_filtered_recommendations(request: Request, categoryName: str):
+
     filtered_recommendations = []
-    filter_recommendations(recommendations, filtered_recommendations, category)
+    filter_recommendations(recommendations, filtered_recommendations, categoryName)
     
-    return render_template("body.html",  recommendations = filtered_recommendations,
-                                         neighborhoods   = neighborhoods, 
-                                         categories      = categories,
-                                         cuisines        = cuisines,
-                                         cities          = cities,
-                                         diets           = diets)
+    context = {
+        "request": request,
+        "recommendations": filtered_recommendations,
+        "neighborhoods": neighborhoods,
+        "categories": categories,
+        "cuisines": cuisines,
+        "cities": cities,
+        "diets": diets
+    }
+    return templates.TemplateResponse("body.html", context)
 
-@app.route("/recommendation/<name>")
-def return_additional_info(name):
+@app.route("/recommendation/{recommendationName}")
+def return_additional_info(request: Request, recommendationName: str):
     additional_info = []
-    fetch_additional_info(recommendations, additional_info, name)
+    fetch_additional_info(recommendations, additional_info, recommendationName)
     
-    return render_template("base.html",     recommendations = recommendations,
-                                            additional_info = additional_info,
-                                            neighborhoods   = neighborhoods,
-                                            categories      = categories,
-                                            cuisines        = cuisines,
-                                            cities          = cities,
-                                            diets           = diets)
+    context = {
+        "request": request,
+        "recommendations": filtered_recommendations,
+        "additional_info": additional_info,
+        "neighborhoods": neighborhoods,
+        "categories": categories,
+        "cuisines": cuisines,
+        "cities": cities,
+        "diets": diets
+    }
+    return templates.TemplateResponse("body.html", context)
 
-@app.route("/about/")
-def return_about():
-    return render_template("about.html")
+@app.get("/itineraries/", response_class=HTMLResponse)
+def return_itineraries(request: Request):
+
+    context = {
+        "request": request
+    }
+    return templates.TemplateResponse("itineraries.html", context)
+
+@app.get("/about/", response_class=HTMLResponse)
+def return_about(request:Request):
+
+    context = {
+        "request": request
+    }
+
+    return templates.TemplateResponse("about.html", context)
