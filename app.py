@@ -5,8 +5,9 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from utilities import   (get_data,
                         swap_ids_to_names,
-                        filter_recommendations,
-                        fetch_additional_info)
+                        fetch_filtered_recommendations,
+                        fetch_additional_info,
+                        fetch_search_results)
 
 app = FastAPI()
 
@@ -42,6 +43,8 @@ swap_ids_to_names(recommendations, cuisines,        'Cuisine')
 swap_ids_to_names(recommendations, cities,          'Cities')
 swap_ids_to_names(recommendations, diets,           'Diets')
 
+
+
 @app.get("/", response_class=HTMLResponse)
 def return_recommendations(request: Request):
     context = {
@@ -54,11 +57,24 @@ def return_recommendations(request: Request):
 @app.get("/category/{category_name}", response_class=HTMLResponse)
 def return_filtered_recommendations(request: Request, category_name: str):
     filtered_recommendations = []
-    filter_recommendations(recommendations, filtered_recommendations, category_name)
+    fetch_filtered_recommendations(recommendations, filtered_recommendations, category_name)
 
     context = {
         "request": request,
         "recommendations": filtered_recommendations
+    }
+    return templates.TemplateResponse("body.html", context)
+
+@app.post("/search/")
+async def return_search_results(request: Request):
+    search_term = await request.body()
+
+    search_results=[]
+    fetch_search_results(recommendations, search_results, search_term)
+
+    context = {
+        "request": request,
+        "recommendations": search_results
     }
     return templates.TemplateResponse("body.html", context)
 

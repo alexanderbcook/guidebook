@@ -13,6 +13,17 @@
 </style>
 <script>
   function setTitle(name){
-    document.getElementById("body-title").innerHTML = "<i>The "+name+"</i"
+    console.log(name)
+    if (name=="search"){
+      search_term = document.forms["search"]["search_term"].value
+      const firstLetterCap = search_term.charAt(0).toUpperCase()
+      const remainingLetters = search_term.substring(1)
+      const prettySearchTerm = firstLetterCap + remainingLetters
+      document.getElementById("body-title").innerHTML = "<i>"+prettySearchTerm+" Recs</i>"
+    }
+    else{
+     document.getElementById("body-title").innerHTML = "<i>The "+name+"</i>"
+    }
+
   }
 </script>

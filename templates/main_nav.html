@@ -6,24 +6,30 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i>RECOMMENDATIONS</i>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#" hx-get="/" hx-target="body" hx-on::after-request="setTitle('List')">EVERYTHING</a></li>
-            <li><a class="dropdown-item" href="#" hx-get="/category/Bars" hx-target="#recommendation-grid" hx-on::after-request="setTitle('Bars')">BARS</a></li>
-            <li><a class="dropdown-item" href="#" hx-get="/category/Restaurants" hx-target="#recommendation-grid" hx-on::after-request="setTitle('Restaurants')">RESTAURANTS</a></li>
-            <li><a class="dropdown-item" href="#" hx-get="/category/Activities"  hx-target="#recommendation-grid" hx-on::after-request="setTitle('Activites')">ACTIVITIES</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/about/"><i>ABOUT</i></a>
-        </li>
+        <form class="d-flex" role="search" name="search" hx-post="/search" hx-target="#recommendation-grid" hx-on::after-request="setTitle('search')" method="POST">
+          <input id="search-query" name="search_term" class="form-control me-2" type="search" placeholder="Try 'Division'..." aria-label="Search">
+          <button class="btn btn-sm" type="submit"><i>Search</i></button>
+        </form>
+
       </ul>
     </div>
   </div>
 </nav>
-<style>
+<script>
+$(document).ready(function(){
+    var placeHolder = ["Try 'dinner'...","Try 'dog-friendly'...","Try 'patio'...","Try 'bar'...","Try 'Laurelhurst'...","Try 'breakfast'...", "Try 'Division'..."];
+    var n=0;
+    var loopLength=placeHolder.length;
 
-</style>
+    setInterval(function(){
+       if(n<loopLength){
+          var newPlaceholder = placeHolder[n];
+          n++;
+          $('input').attr('placeholder',newPlaceholder);
+       } else {
+          $('input').attr('placeholder',placeHolder[0]);
+          n=0;
+       }
+    },4000);
+});
+</script>

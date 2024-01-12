@@ -12,7 +12,7 @@ body {
 img{
   border-radius: 12.5px !important;
 }
-.card, .btn, .dropdown-menu{
+.card, .btn, .dropdown-menu, #search-query{
   background-color: #FFCCCD !important;
   border-radius: 12.5px !important;
   box-shadow: 2px 3px 2px rgb(0 0 0 / 5%) !important;
@@ -41,4 +41,9 @@ img{
 }
 .col{
   margin-top:1rem;
+}
+.form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #F93943 !important; 
+            opacity: 1; /* Firefox */
+            font-style: italic;
 }

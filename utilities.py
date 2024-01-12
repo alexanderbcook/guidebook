@@ -65,7 +65,7 @@ def get_unique_list(recommendations, name):
     return unique_list
 
 @timer
-def filter_recommendations(recommendations, container, category):
+def fetch_filtered_recommendations(recommendations, container, category):
     for recommendation in recommendations:
         if "Categories" in recommendation["fields"].keys():
             if category in recommendation["fields"]["Categories"]:
@@ -79,3 +79,23 @@ def fetch_additional_info(recommendations, container, recommendation_id):
         if recommendation_id == recommendation["id"]:
             container.append(recommendation)
     return container
+
+@timer
+def fetch_search_results(recommendations, container, search_term):
+    search_term = str(search_term).replace("search_term=","").replace("b'","").replace("'","").lower()
+    for recommendation in recommendations:
+        if  search_term in recommendation["fields"]["Name"].lower() and recommendation not in container:
+                container.append(recommendation)
+        if "Neighborhood" in recommendation["fields"].keys():
+            for neighborhood in recommendation["fields"]["Neighborhood"]:
+                if search_term in neighborhood.lower() and recommendation not in container:
+                    container.append(recommendation)
+        if "Tags" in recommendation["fields"].keys():
+            for tag in recommendation["fields"]["Tags"]:
+                if search_term in tag.lower() and recommendation not in container:
+                    container.append(recommendation)
+        if "Address" in recommendation["fields"].keys():
+            if  search_term in recommendation["fields"]["Address"].lower() and recommendation not in container:
+                container.append(recommendation)
+    return container
+
