@@ -4,4 +4,4 @@ set -a
 source config.env
 set +a
 
-flask run --debug
+uvicorn main:app --reload
