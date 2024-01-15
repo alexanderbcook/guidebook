@@ -3,9 +3,18 @@
  {% for r in recommendations %} 
  <div class="col">
     <!-- Card -->
+    {% if r.fields.POTM == '1' %}
+    <button class="card" id="potm" data-bs-toggle="modal" data-bs-target="#{{r.id}}" hx-target="#{{r.id}}" hx-get="/recommendation/{{r.id}}">
+    {% else %}
     <button class="card" data-bs-toggle="modal" data-bs-target="#{{r.id}}" hx-target="#{{r.id}}" hx-get="/recommendation/{{r.id}}">
+    {% endif %}
       <div class="card-body">
+        {% if r.fields.POTM == '1' %}
+        <h4 class="card-title">{{r.fields.Name}}</h4>
+        <h6 class="card-title"><i>Pick of the Moment!</i></h5>
+        {% else %}
         <h5 class="card-title">{{r.fields.Name}}</h5>
+        {% endif %}
         <p class="card-text" id="desktop-text">        
           {% if r.fields.Description|length < 150 %}
           {{ r.fields.Description }}

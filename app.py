@@ -47,6 +47,7 @@ swap_ids_to_names(recommendations, diets,           'Diets')
 
 @app.get("/", response_class=HTMLResponse)
 def return_recommendations(request: Request):
+
     context = {
         "request": request,
         "recommendations": recommendations,

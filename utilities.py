@@ -30,7 +30,7 @@ def timer(func):
 def get_data(name, container,sort):
     table = Table(AIRTABLE_SECRET_TOKEN, AIRTABLE_BASE_ID, name)
     if sort:
-        container = table.all(sort=["-LastModified"])
+        container = table.all(sort=["-POTM", "-LastModified"])
     else:
         container = table.all()
 

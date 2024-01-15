@@ -27,6 +27,10 @@ img{
 .card-title, .nav-link, #body-title,.navbar-brand, .btn, .dropdown-item{
   color: #F93943 !important;
 }
+#potm{
+  background-color: #fad7e4 !important;
+  border: black;
+}
 .navbar-brand{
   font-size: 1.9rem;
   font-weight: 900;
