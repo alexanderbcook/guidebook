@@ -12,7 +12,7 @@ body {
 img{
   border-radius: 12.5px !important;
 }
-.card, .btn, .dropdown-menu, #search-query{
+.card, .btn, .dropdown-menu, #search-query, #footer{
   background-color: #FFCCCD !important;
   border-radius: 12.5px !important;
   box-shadow: 2px 3px 2px rgb(0 0 0 / 5%) !important;
@@ -29,7 +29,7 @@ img{
 }
 #potm{
   background-color: #fad7e4 !important;
-  border: black;
+  border: black !important;
 }
 .navbar-brand{
   font-size: 1.9rem;
@@ -44,10 +44,52 @@ img{
   color:black;
 }
 .col{
-  margin-top:1rem;
+  margin-top:1rem !important;
 }
 .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
             color: #F93943 !important; 
             opacity: 1; /* Firefox */
-            font-style: italic;
+            font-style: italic !important;
+}
+#mobile-text{
+  display:none;
+  visibility:hidden;
+}
+@media only screen and (max-width: 900px) {
+  #desktop-text { display: none !important; }
+  #mobile-text  { display: block; visibility: visible; }
+}
+
+/* Small devices (portrait tablets and large phones, 300px and up) */
+@media only screen and (min-width: 300px) {  
+  .card{
+    width:8rem;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 300px and up) */
+@media only screen and (min-width: 375px) {  
+  .card{
+    width:10rem;
+  }
+}
+/* Small devices (portrait tablets and large phones, 300px and up) */
+@media only screen and (min-width: 400px) {  
+  .card{
+    width:10.5rem;
+  }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .card{
+    width:13rem;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .card{
+    width:18rem;
+    height:100%;
+  }
 }
