@@ -66,10 +66,14 @@ def get_unique_list(recommendations, name):
 
 @timer
 def fetch_filtered_recommendations(recommendations, container, category):
-    for recommendation in recommendations:
-        if "Categories" in recommendation["fields"].keys():
-            if category in recommendation["fields"]["Categories"]:
-                container.append(recommendation)
+    if category == "all":
+      for recommendation in recommendations:
+        container.append(recommendation)
+    else:
+        for recommendation in recommendations:
+            if "Categories" in recommendation["fields"].keys():
+                if category in recommendation["fields"]["Categories"]:
+                    container.append(recommendation)
 
     return container
 

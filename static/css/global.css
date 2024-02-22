@@ -51,6 +51,10 @@ img{
             opacity: 1; /* Firefox */
             font-style: italic !important;
 }
+.row{
+    margin-right:0 !important;
+    margin-left:0 !important;
+  }
 #mobile-text{
   display:none;
   visibility:hidden;
@@ -70,8 +74,9 @@ img{
 /* Small devices (portrait tablets and large phones, 300px and up) */
 @media only screen and (min-width: 375px) {  
   .card{
-    width:9.25rem;
+    width:9.45rem;
   }
+
 }
 /* Small devices (portrait tablets and large phones, 300px and up) */
 @media only screen and (min-width: 400px) {  
