@@ -63,20 +63,20 @@ img{
 /* Small devices (portrait tablets and large phones, 300px and up) */
 @media only screen and (min-width: 300px) {  
   .card{
-    width:8rem;
+    width:17rem;
   }
 }
 
 /* Small devices (portrait tablets and large phones, 300px and up) */
 @media only screen and (min-width: 375px) {  
   .card{
-    width:10rem;
+    width:9.25rem;
   }
 }
 /* Small devices (portrait tablets and large phones, 300px and up) */
 @media only screen and (min-width: 400px) {  
   .card{
-    width:10.5rem;
+    width:10.25rem;
   }
 }
 /* Medium devices (landscape tablets, 768px and up) */
