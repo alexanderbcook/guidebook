@@ -1,14 +1,15 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
+
     <a class="navbar-brand" href="/"><i>RILEY'S RECS</i></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto">
-        <form class="d-flex" role="search" name="search" hx-post="/search" hx-target="#recommendation-grid" hx-on::after-request="setTitle('search')" method="POST">
+        <form class="d-flex" role="search" name="search" hx-post="/search" hx-target="#recommendation-grid" hx-swap="outerHTML" hx-on::after-request="setTitle('search')" method="POST">
           <input id="search-query" name="search_term" class="form-control me-2" type="search" placeholder="Try 'Division'..." aria-label="Search">
-          <button class="btn btn-sm" type="submit"><i>Search</i></button>
+          <button class="btn btn-sm" id="search-button" type="submit">Search</button>
         </form>
 
       </ul>

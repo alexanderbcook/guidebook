@@ -1,0 +1,48 @@
+  <div class="row">
+   {% for r in recommendations %} 
+   <div class="col">
+      <!-- Card -->
+      {% if r.fields.POTM == '1' %}
+      <button class="card" id="potm" data-bs-toggle="modal" data-bs-target="#{{r.id}}" hx-target="#{{r.id}}" hx-get="/recommendation/{{r.id}}">
+      {% else %}
+      <button class="card" id="{{r.fields.Categories[0].lower()}}"data-bs-toggle="modal" data-bs-target="#{{r.id}}" hx-target="#{{r.id}}" hx-get="/recommendation/{{r.id}}">
+      {% endif %}
+        <div class="card-body">
+          {% if r.fields.POTM == '1' %}
+          <h4 class="card-title" id="card-title">{{r.fields.Name}}</h4>
+          <h6 class="card-title" id="card-title"><i>Pick of the Moment!</i></h6>
+          {% else %}
+          <h5 class="card-title" id="card-title">{{r.fields.Name}}</h5>
+          {% endif %}
+          <p class="card-text" id="desktop-text">        
+            {% if r.fields.Description|length < 150 %}
+            {{ r.fields.Description }}
+            {% else %}
+            {{ r.fields.Description|truncate(150, False, '...')}}
+            {% endif %}
+          </p>
+          <p class="card-text" id="mobile-text">        
+            {% if r.fields.Description|length < 75 %}
+            {{ r.fields.Description }}
+            {% else %}
+            {{ r.fields.Description|truncate(75, False, '...')}}
+            {% endif %}
+          </p>
+          <hr/>
+          {% if 'Tags' in r.fields %}
+          <p>
+            <i>{% for t in r.fields.Tags %}
+                {{t.lower() | trim}}&nbsp
+              {% endfor %}
+            </i>
+          </p>
+          {% endif %}
+        </div>
+      </button>
+      <!-- Modal -->
+      <div class="modal fade" id="{{r.id}}" tabindex="-1" aria-hidden="true">
+        {% include 'modal.html' %}
+      </div>
+    </div>
+   {% endfor %}
+  </div>

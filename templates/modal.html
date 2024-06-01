@@ -15,11 +15,11 @@
               <figcaption><i>PC: {{a.fields.PhotoCredit}}</i></figcaption>
             </figure>
             {% endif %}
-            <h3 class="card-title">{{a.fields.Name}}</h3>
+            <h3 id="card-title">{{a.fields.Name}}</h3>
             {% if 'Neighborhood' in a.fields%}
-            <p class="card-text">{{a.fields.Neighborhood[0] | trim}}</p>
+            <p class="card-text" id="card-title">{{a.fields.Neighborhood[0] | trim}}</p>
             {% endif %}
-            <p class="card-text">{{a.fields.Description | trim}}</p>
+            <p class="card-text" id="card-title">{{a.fields.Description | trim}}</p>
             {% if 'Address' in a.fields %}
             <a class="card-text" target="_blank" rel="noopener noreferrer" href="{{a.fields.MapLink}}">{{a.fields.Address | trim}}{% if 'Cities' in a.fields%}{{', '+a.fields.Cities[0] | trim}}{% endif %}</a>
             {% endif %}     

@@ -7,23 +7,122 @@
     {% include 'categories.html' %}
     {% include 'body.html' %}
     </div>
-    {% include 'footer.html' %}
   </body>
 </html>
 <style type="text/css">
 </style>
 <script>
+  function getCookie(name) {
+      var dc = document.cookie;
+      var prefix = name + "=";
+      var begin = dc.indexOf("; " + prefix);
+      if (begin == -1) {
+        begin = dc.indexOf(prefix);
+          if (begin != 0) return null;
+      }
+      else
+      {
+          begin += 2;
+          var end = document.cookie.indexOf(";", begin);
+          if (end == -1) {
+          end = dc.length;
+          }
+      }
+      return decodeURI(dc.substring(begin + prefix.length, end));
+  } 
+
+  function setCookie() {
+      var cookie = getCookie("currentlyVisisble");
+
+      if (cookie == null) {
+        document.cookie = "currentlyVisible=list"; 
+      }
+  }
+  function setVisible(){
+    var list = document.getElementById('recommendation-grid');
+    var map = document.getElementById('map-container');
+    var button = document.getElementById('swapVisibility'); 
+
+    var cookie = getCookie("currentlyVisible");
+    console.log('cookie')
+    console.log(cookie)
+    console.log(list)
+    console.log(map)
+    if(cookie=='list'){
+      console.log('setting list visible')
+      list.style.visibility = 'visible';
+      map.style.visibility = 'collapse';
+      button.textContent = 'Map'  
+    }
+    if(cookie=='map'){
+      console.log('setting map visible')
+      list.style.visibility = 'collapse';
+      map.style.visibility = 'visible';
+      button.textContent = 'List'       
+    }
+    console.log(list)
+    console.log(map)
+  }
+
+  function swapVisible() {
+    var list = document.getElementById('recommendation-grid');
+    var map = document.getElementById('map-container');
+    var button = document.getElementById('swapVisibility');
+    if(list.style.visibility=='collapse'){
+      list.style.visibility = 'visible';
+      map.style.visibility = 'collapse';
+      button.textContent = 'Map';
+      document.cookie = "currentlyVisible=list"; 
+    }
+    else{
+      getUserLocation()
+      list.style.visibility = 'collapse';
+      map.style.visibility = 'visible';
+      button.textContent = 'List';
+      document.cookie = "currentlyVisible=map"; 
+    }
+  }
+
   function setTitle(name){
+    setVisible()
     if (name=="search"){
       search_term = document.forms["search"]["search_term"].value
       const firstLetterCap = search_term.charAt(0).toUpperCase()
       const remainingLetters = search_term.substring(1)
       const prettySearchTerm = firstLetterCap + remainingLetters
-      document.getElementById("body-title").innerHTML = "<i>"+prettySearchTerm+" Recs</i>"
+      document.getElementById("body-title").innerHTML = "<b>"+prettySearchTerm + " Recs</b>"
     }
     else{
-     document.getElementById("body-title").innerHTML = "<i>The "+name+"</i>"
+     document.getElementById("body-title").innerHTML = "<b>The " + name + "</b>"
     }
-
   }
+
+  function getUserLocation(){
+      const successCallback = (position) => {
+          var markerColor = 'blue'
+          var popupHTML = "<h6><b>Your Location!</b></h6"
+
+          var coords = [position.coords.longitude, position.coords.latitude]
+          var marker = new mapboxgl.Marker({ "color": markerColor })
+              .setLngLat(coords)
+              .setPopup(new mapboxgl.Popup({"closeButton":false}).setHTML( popupHTML))
+              .addTo(map);
+
+          var markerDiv = marker.getElement();
+
+          markerDiv.addEventListener('mouseenter', () => marker.togglePopup());
+          markerDiv.addEventListener('mouseleave', () => marker.togglePopup());
+      };
+
+      const errorCallback = (error) => {
+          console.log(error);
+      };
+      navigator.geolocation.getCurrentPosition(successCallback,errorCallback); 
+  }
+
+    function togglePopup(marker) {
+        marker.togglePopup()
+    }
+    setCookie()
+
 </script>
