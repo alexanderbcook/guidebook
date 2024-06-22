@@ -1,0 +1,49 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">RILEY'S RECS</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="navbar-brand" id="offcanvasNavbarLabel">RILEY'S RECS</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="https://pdxrecs.com">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://pdxrecs.substack.com/">Newsletter</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://pdxrecs.com/about">About</a>
+          </li>
+        </ul>
+        <form class="d-flex mt-3" role="search" name="search" hx-post="/search" hx-target="#recommendation-grid" hx-swap="outerHTML" hx-on::after-request="setTitle('search')" method="POST">
+          <input class="form-control me-2" id="search-query" name="search_term" place-holder="Try 'Division'..." type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" id="search-button" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</nav>
+<script>
+$(document).ready(function(){
+    var placeHolder = ["Try 'dinner'...","Try 'dog-friendly'...","Try 'patio'...","Try 'bar'...","Try 'Laurelhurst'...","Try 'breakfast'...", "Try 'Division'..."];
+    var n=0;
+    var loopLength=placeHolder.length;
+
+    setInterval(function(){
+       if(n<loopLength){
+          var newPlaceholder = placeHolder[n];
+          n++;
+          $('input').attr('placeholder',newPlaceholder);
+       } else {
+          $('input').attr('placeholder',placeHolder[0]);
+          n=0;
+       }
+    },4000);
+});
+</script>

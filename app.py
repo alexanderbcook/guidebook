@@ -53,7 +53,7 @@ def return_recommendations(request: Request):
         "recommendations": recommendations,
         "categories": categories,
     }
-    
+    print(recommendations)
     return templates.TemplateResponse("base.html", context)
 
 @app.get("/category/{category_name}", response_class=HTMLResponse)

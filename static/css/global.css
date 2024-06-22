@@ -24,7 +24,7 @@ img{
   color: #F93943 !important;
   background-color: #F2BABB !important;
 }
-.nav-link, #body-title,.navbar-brand, .btn, .dropdown-item{
+.nav-link, #body-title,.navbar-brand, .dropdown-item{
   color: #F93943 !important;
 }
 
@@ -56,14 +56,14 @@ img{
     margin-right:0 !important;
     margin-left:0 !important;
   }
-
 #search-query, #search-button{
-  box-shadow: 2px 3px 2px rgb(0 0 0 / 5%) !important;
-  background-color: #fad7e4 !important;
+  box-shadow: 2px 3px 2px rgb(0 0 0 / 5%) !important; 
+  background-color: #F9F0F8 !important;
   border-radius: 12.5px !important;
   color: #F93943;
+  border-color: #F9F0F8 !important;
 }
-#potm{
+#potm,  .navbar-toggler{
   background-color: #fad7e4 !important;
   color: #106946 !important;
 }
@@ -79,6 +79,10 @@ img{
 }
 #bars{
   background-color: #F9F0F8 !important;
+  color: #106946 !important;
+}
+#offcanvasNavbar{
+  background-color: #F8F3E7 !important;
   color: #106946 !important;
 }
 #activities{

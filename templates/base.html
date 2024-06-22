@@ -3,7 +3,7 @@
    {% include 'head.html' %}
   <body> 
     <div class="container">
-    {% include 'main_nav.html' %}
+    {% include 'nav.html' %}
     {% include 'categories.html' %}
     {% include 'body.html' %}
     </div>
@@ -12,59 +12,27 @@
 <style type="text/css">
 </style>
 <script>
-  function getCookie(name) {
-      var dc = document.cookie;
-      var prefix = name + "=";
-      var begin = dc.indexOf("; " + prefix);
-      if (begin == -1) {
-        begin = dc.indexOf(prefix);
-          if (begin != 0) return null;
-      }
-      else
-      {
-          begin += 2;
-          var end = document.cookie.indexOf(";", begin);
-          if (end == -1) {
-          end = dc.length;
-          }
-      }
-      return decodeURI(dc.substring(begin + prefix.length, end));
-  } 
+  var currentCategory = "list"
+  var currentVisible = "list"
 
-  function setCookie() {
-      var cookie = getCookie("currentlyVisisble");
 
-      if (cookie == null) {
-        document.cookie = "currentlyVisible=list"; 
-      }
-  }
   function setVisible(){
     var list = document.getElementById('recommendation-grid');
     var map = document.getElementById('map-container');
     var button = document.getElementById('swapVisibility'); 
-
-    var cookie = getCookie("currentlyVisible");
-    console.log('cookie')
-    console.log(cookie)
-    console.log(list)
-    console.log(map)
-    if(cookie=='list'){
-      console.log('setting list visible')
+    if(currentVisible=='list'){
       list.style.visibility = 'visible';
       map.style.visibility = 'collapse';
       button.textContent = 'Map'  
     }
-    if(cookie=='map'){
-      console.log('setting map visible')
+    if(currentVisible=='map'){
       list.style.visibility = 'collapse';
       map.style.visibility = 'visible';
       button.textContent = 'List'       
     }
-    console.log(list)
-    console.log(map)
   }
 
-  function swapVisible() {
+  function swapVisible(currentVisible) {
     var list = document.getElementById('recommendation-grid');
     var map = document.getElementById('map-container');
     var button = document.getElementById('swapVisibility');
@@ -72,18 +40,21 @@
       list.style.visibility = 'visible';
       map.style.visibility = 'collapse';
       button.textContent = 'Map';
-      document.cookie = "currentlyVisible=list"; 
+      currentVisible = "list"; 
     }
     else{
       getUserLocation()
       list.style.visibility = 'collapse';
       map.style.visibility = 'visible';
       button.textContent = 'List';
-      document.cookie = "currentlyVisible=map"; 
+      currentVisible = "map"; 
     }
+    console.log(currentVisible)
+    console.log(currentCategory)
   }
 
   function setTitle(name){
+    currentCategory = name.toLowerCase()
     setVisible()
     if (name=="search"){
       search_term = document.forms["search"]["search_term"].value
@@ -123,6 +94,5 @@
     function togglePopup(marker) {
         marker.togglePopup()
     }
-    setCookie()
 
 </script>
