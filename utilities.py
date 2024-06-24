@@ -8,8 +8,8 @@ app = Flask(__name__)
 env_config = os.getenv("PROD_APP_SETTINGS")
 app.config.from_object(env_config)
 
-AIRTABLE_SECRET_TOKEN = "patJMTdA6xReF018G.9e1128bbb317fc6263dd7705cc6396d9e218aeae56042807c17b103c48d2f44f"
-AIRTABLE_BASE_ID = "app2f7RZsPJOUKXnd"
+AIRTABLE_SECRET_TOKEN = "REDACTED"
+AIRTABLE_BASE_ID = "REDACTED"
 
 ### Decoraters.
 
@@ -86,7 +86,6 @@ def fetch_additional_info(recommendations, container, recommendation_id):
 
 @timer
 def fetch_search_results(recommendations, container, search_term):
-    search_term = str(search_term).replace("search_term=","").replace("b'","").replace("'","").lower()
     for recommendation in recommendations:
         if  search_term in recommendation["fields"]["Name"].lower() and recommendation not in container:
                 container.append(recommendation)
