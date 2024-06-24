@@ -1,4 +1,5 @@
-<div id="recommendation-grid" style="visibility:visible">
+<div id="content-grid">
+{% include 'categories.html' %}
   <div class="row row-cols-auto">
    {% for r in recommendations %} 
    <div class="col">
@@ -46,63 +47,4 @@
       </div>
     </div>
    {% endfor %}
-  </div></div>  
-<div id='map-container' data-tap-disabled="true" style="visibility:collapse">
-  <div id='map' style='width:100%; height:75vh; margin:0;'></div>
-</div>
-
-
-<script>
-
-    var recommendations = {{recommendations | tojson | safe }}
-
-    mapboxgl.accessToken = 'pk.eyJ1IjoiYWJjb29rIiwiYSI6ImNqcnp5N3N2ZzFkeWs0NG80bnVtNmFxaDEifQ.zPkUuVuuVNGg-3DkQcBflQ';
-
-    var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v12',
-        center: [-122.6355, 45.535],
-        zoom: 10,
-        interactive: false
-
-    });
-
-    var markers = []
-
-    var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
-
-    recommendations.forEach(recommendation => {
-      var markerColor = '#e87166'
-      var popupHTML = "<h6><b>Name:</b> "+recommendation.fields.Name+"</h6><br><h6><b>Address:</b> "+recommendation.fields.Address
-
-      if(!isNaN(recommendation.fields.lng)){
-        var coords = [recommendation.fields.lng, recommendation.fields.lat]
-          var marker = new mapboxgl.Marker({ "color": markerColor })
-            .setLngLat(coords)
-            .setPopup(new mapboxgl.Popup({"closeButton":false}).setHTML( popupHTML))
-            .addTo(map);
-
-        var markerDiv = marker.getElement();
- 
-        markerDiv.addEventListener('mouseenter', () => marker.togglePopup());
-        markerDiv.addEventListener('mouseleave', () => marker.togglePopup());
-        markerDiv.addEventListener('click', () =>   window.open(recommendation.fields.MapLink, '_blank').focus());
-      }
-    });     
-
-    </script>
-    <style>
-    .leaflet-clickable {
-       cursor: pointer;
-    }
-    .mapboxgl-popup-content{
-        font: 7px sans-serif;
-        padding: 7.5px;
-        width: 275px;
-    }
-    .mapbox-popup-content-wrapper {
-        padding: 5%;
-    }
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    </style>
+  </div></div> 

@@ -8,8 +8,8 @@ app = Flask(__name__)
 env_config = os.getenv("PROD_APP_SETTINGS")
 app.config.from_object(env_config)
 
-AIRTABLE_SECRET_TOKEN = os.getenv("AIRTABLE_SECRET_TOKEN")
-AIRTABLE_BASE_ID = os.getenv("AIRTABLE_BASE_ID")
+AIRTABLE_SECRET_TOKEN = "patJMTdA6xReF018G.9e1128bbb317fc6263dd7705cc6396d9e218aeae56042807c17b103c48d2f44f"
+AIRTABLE_BASE_ID = "app2f7RZsPJOUKXnd"
 
 ### Decoraters.
 
@@ -66,7 +66,7 @@ def get_unique_list(recommendations, name):
 
 @timer
 def fetch_filtered_recommendations(recommendations, container, category):
-    if category == "all":
+    if category == "List":
       for recommendation in recommendations:
         container.append(recommendation)
     else:

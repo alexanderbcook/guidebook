@@ -4,95 +4,9 @@
   <body> 
     <div class="container">
     {% include 'nav.html' %}
-    {% include 'categories.html' %}
     {% include 'body.html' %}
     </div>
   </body>
 </html>
 <style type="text/css">
 </style>
-<script>
-  var currentCategory = "list"
-  var currentVisible = "list"
-
-
-  function setVisible(){
-    var list = document.getElementById('recommendation-grid');
-    var map = document.getElementById('map-container');
-    var button = document.getElementById('swapVisibility'); 
-    if(currentVisible=='list'){
-      list.style.visibility = 'visible';
-      map.style.visibility = 'collapse';
-      button.textContent = 'Map'  
-    }
-    if(currentVisible=='map'){
-      list.style.visibility = 'collapse';
-      map.style.visibility = 'visible';
-      button.textContent = 'List'       
-    }
-  }
-
-  function swapVisible(currentVisible) {
-    var list = document.getElementById('recommendation-grid');
-    var map = document.getElementById('map-container');
-    var button = document.getElementById('swapVisibility');
-    if(list.style.visibility=='collapse'){
-      list.style.visibility = 'visible';
-      map.style.visibility = 'collapse';
-      button.textContent = 'Map';
-      currentVisible = "list"; 
-    }
-    else{
-      getUserLocation()
-      list.style.visibility = 'collapse';
-      map.style.visibility = 'visible';
-      button.textContent = 'List';
-      currentVisible = "map"; 
-    }
-    console.log(currentVisible)
-    console.log(currentCategory)
-  }
-
-  function setTitle(name){
-    currentCategory = name.toLowerCase()
-    setVisible()
-    if (name=="search"){
-      search_term = document.forms["search"]["search_term"].value
-      const firstLetterCap = search_term.charAt(0).toUpperCase()
-      const remainingLetters = search_term.substring(1)
-      const prettySearchTerm = firstLetterCap + remainingLetters
-      document.getElementById("body-title").innerHTML = "<b>"+prettySearchTerm + " Recs</b>"
-    }
-    else{
-     document.getElementById("body-title").innerHTML = "<b>The " + name + "</b>"
-    }
-  }
-
-  function getUserLocation(){
-      const successCallback = (position) => {
-          var markerColor = 'blue'
-          var popupHTML = "<h6><b>Your Location!</b></h6"
-
-          var coords = [position.coords.longitude, position.coords.latitude]
-          var marker = new mapboxgl.Marker({ "color": markerColor })
-              .setLngLat(coords)
-              .setPopup(new mapboxgl.Popup({"closeButton":false}).setHTML( popupHTML))
-              .addTo(map);
-
-          var markerDiv = marker.getElement();
-
-          markerDiv.addEventListener('mouseenter', () => marker.togglePopup());
-          markerDiv.addEventListener('mouseleave', () => marker.togglePopup());
-      };
-
-      const errorCallback = (error) => {
-          console.log(error);
-      };
-      navigator.geolocation.getCurrentPosition(successCallback,errorCallback); 
-  }
-
-    function togglePopup(marker) {
-        marker.togglePopup()
-    }
-
-</script>

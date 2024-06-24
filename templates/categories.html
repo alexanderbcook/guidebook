@@ -1,9 +1,33 @@
 <div class="text-center">
-  <h2 id="body-title"><b>The List</b></h2>
-  <a class="btn btn-sm" id="potm" role="button" hx-target="#recommendation-grid" hx-swap="outerHTML" hx-get="/category/all" hx-on::after-request="setTitle('List')">Everything</a>
+  {% if (currentCategory == "List") or (currentCategory == 'Bars') or (currentCategory == 'Activities') or (currentCategory == 'Restaurants') %}
+  <h2 id="body-title"><b>The {{ currentCategory }}</b></h2>
+  {% else %}
+    <h2 id="body-title"><b>{{ searchTerm|title }} Recs</b></h2>
+  {% endif %}
+  <a class="btn btn-sm" id="potm" role="button" hx-target="#content-grid" hx-swap="outerHTML" hx-get="/category/List">Everything</a>
   {% for c in categories %}
-    <a class="btn btn-sm" id="{{c.fields.Name.lower()}}"role="button" hx-target="#recommendation-grid" hx-swap="outerHTML" hx-get="/category/{{c.fields.Name}}" hx-on::after-request="setTitle('{{c.fields.Name}}')">{{c.fields.Name}}</a>
+    <a class="btn btn-sm" id="{{c.fields.Name.lower()}}"role="button" hx-target="#content-grid" hx-swap="outerHTML" hx-get="/category/{{c.fields.Name}}" >{{c.fields.Name}}</a>
   {% endfor %}
-  <!--a class="btn btn-sm float-end" id="swapVisibility" role="button" onclick="swapVisible()">Map</a-->
-</div>
+  {% if (currentCategory == 'List') and (currentView == "map") %}
+  <a class="btn btn-sm float-end" id="swapVisibility" hx-target="#content-grid" hx-swap="outerHTML" hx-get="swapContext/{{ currentCategory }}" role="button">List</a>
+  {% elif (currentCategory == 'List') and (currentView == "list") %}
+  <a class="btn btn-sm float-end" id="swapVisibility" hx-target="#content-grid" hx-swap="outerHTML" hx-get="swapContext/{{ currentCategory }}" role="button">Map</a>
+  {% elif (currentCategory == 'Bars') and (currentView == "map") %}
+  <a class="btn btn-sm float-end" id="swapVisibility" hx-target="#content-grid" hx-swap="outerHTML" hx-get="swapContext/{{ currentCategory }}" role="button">List</a>
+  {% elif (currentCategory == 'Bars') and (currentView == "list") %}
+  <a class="btn btn-sm float-end" id="swapVisibility" hx-target="#content-grid" hx-swap="outerHTML" hx-get="swapContext/{{ currentCategory }}" role="button">Map</a>
+  {% elif (currentCategory == 'Activities') and (currentView == "map") %}
+  <a class="btn btn-sm float-end" id="swapVisibility" hx-target="#content-grid" hx-swap="outerHTML" hx-get="swapContext/{{ currentCategory }}" role="button">List</a>
+  {% elif (currentCategory == 'Activities') and (currentView == "list") %}
+  <a class="btn btn-sm float-end" id="swapVisibility" hx-target="#content-grid" hx-swap="outerHTML" hx-get="swapContext/{{ currentCategory }}" role="button">Map</a>
+  {% elif (currentCategory == 'Restaurants') and (currentView == "map") %}
+  <a class="btn btn-sm float-end" id="swapVisibility" hx-target="#content-grid" hx-swap="outerHTML" hx-get="swapContext/{{ currentCategory }}" role="button">List</a>
+  {% elif (currentCategory == 'Restaurants') and (currentView == "list") %}
+  <a class="btn btn-sm float-end" id="swapVisibility" hx-target="#content-grid" hx-swap="outerHTML" hx-get="swapContext/{{ currentCategory }}" role="button">Map</a>
+  {% elif (currentView == "list") %}
+  <a class="btn btn-sm float-end" id="swapVisibility" hx-target="#content-grid" hx-swap="outerHTML" hx-get="swapContext/{{ currentCategory }}" role="button">Map</a>
+  {% elif (currentView == "map") %}
+  <a class="btn btn-sm float-end" id="swapVisibility" hx-target="#content-grid" hx-swap="outerHTML" hx-get="swapContext/{{ currentCategory }}" role="button">List</a>
+  {% endif %}
 
+</div>
